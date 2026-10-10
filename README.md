@@ -113,6 +113,7 @@ There is one top-level folder per source, i.e. per application that authored the
 | Folder | Source | Files |
 |---|---|---:|
 | [`photoshop/`](#photoshop-photoshop-oracle-psds) | Adobe Photoshop 2026 (27.10), driven by [`tools/photoshop-oracles/`](tools/photoshop-oracles) | 258 |
+| [`krita/`](#krita-krita-oracle-documents) | Krita 5.2.9 on Linux, driven by [`tools/krita-oracles/`](tools/krita-oracles) | 70 |
 
 The repository also contains:
 
@@ -333,6 +334,19 @@ And [**ArtCraft**](https://getartcraft.com/) itself, our AI image and video stud
   <a href="https://getartcraft.com/apps">The Crafting Apps</a> ·
   <a href="https://getartcraft.com/apps/photocraft">PhotoCraft</a>
 </p>
+
+## `krita/`: Krita oracle documents
+
+35 small documents (96×96) created from scratch with **Krita 5.2.9 on Linux** by the Python
+generator in [`tools/krita-oracles/`](tools/krita-oracles), each saved as `.kra` and exported as
+`.ora`. Both carry `mergedimage.png`, Krita's rendering of the layer stack. Cases: 27 blend
+modes (`blend-<krita id>`), opacity and visibility, layer offsets across tile edges, moved
+layers and groups, nested isolated and pass-through groups, a transparency mask, 16-bit RGBA,
+8-bit gray, and a vector layer (which importers may leave out). The embedded ICC profiles are
+removed (see the generator's README); the documents are sRGB.
+
+PhotoCraft reads them with
+`KRITA_TEST_DIR=<this clone>/krita cargo test -p photocraft-io --test krita_corpus -- --ignored`.
 
 ## License and credits
 
