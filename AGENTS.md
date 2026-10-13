@@ -39,9 +39,10 @@ history, and submodules cause init and detached-HEAD friction for contributors.
 1. **Edit the generator** (`tools/photoshop-oracles/generate.jsx`): add a case, give the file a
    name that states the feature and its parameters, and keep the canvas small.
 2. **Prerequisites:**
-   - a Mac with Adobe Photoshop installed;
-   - macOS **Automation** permission for your terminal → Adobe Photoshop (asked on the first
-     run; System Settings › Privacy & Security › Automation);
+   - Adobe Photoshop on a Mac, or on Windows (Git Bash/MSYS2, or under Wine; see
+     `tools/photoshop-oracles/run-jsx-windows.sh`, and start Photoshop first);
+   - on a Mac, **Automation** permission for your terminal → Adobe Photoshop (asked on the
+     first run; System Settings › Privacy & Security › Automation);
    - the fonts listed in the README.
 
    Don't change Photoshop's preferences by hand. The generator sets what it needs and restores

@@ -196,7 +196,8 @@ history** (no force-push, no history rewrite).
 
 ## `photoshop/`: Photoshop oracle PSDs
 
-256 small PSDs created from scratch with **Adobe Photoshop 2026 (27.10.0) on macOS** by the
+260 small PSDs created from scratch with **Adobe Photoshop 2026 (27.10.0) on macOS** (`layer-comps/`:
+Photoshop 2025 (26.5.0) on Windows) by the
 ExtendScript generator in [`tools/photoshop-oracles/`](tools/photoshop-oracles). Each file is
 saved with **Maximize Compatibility** turned on, so its merged composite is Photoshop's own
 rendering of the layer stack. PhotoCraft compares its import and re-render against that composite.
@@ -207,6 +208,7 @@ rendering of the layer stack. PhotoCraft compares its import and re-render again
 | `effects/` | 37 | Bevel & Emboss in every style (outer, inner, emboss, pillow, stroke emboss) × technique (smooth, chisel hard, chisel soft); direction, soften, angle/altitude/depth; contours and gloss contours (with and without anti-aliasing, ranges); stroke emboss with inside/center strokes; Satin; outer glow (soft, precise + spread, contour, gradient); inner glow (edge, center + choke, contour); a combination |
 | `text/` | 54 | Point and paragraph type: style runs (sizes, colours, fonts), tracking, kerning (metrics / optical / off), manual leading, baseline shift, faux bold/italic, all caps, small caps (faux and OpenType), super/subscript, point alignment, paragraph alignment and all four justifications, hyphenation on/off, indents and space before/after, horizontal/vertical scale, underline/strikethrough, vertical Latin (rotated/upright) and CJK text, a vertical paragraph, five warps, text on a closed and an open path, OpenType ligatures (on/off), discretionary ligatures, fractions, old-style figures, ordinals, the five anti-alias modes, type with layer styles and with a blend mode |
 | `adjustments/<mode><bits>/` | 135 | Adjustment layers in RGB 8/16/32, Grayscale 8/16/32, CMYK 8/16 and Lab 8/16: Levels, Curves (composite and per channel), Brightness/Contrast (modern and legacy), Exposure, Vibrance, Hue/Saturation (and Colorize), Color Balance, Black & White with tint, Photo Filter, Channel Mixer, Gradient Map, Selective Color, Invert, Posterize, Threshold, where Photoshop offers them in that mode and depth. Each directory has `baseline-layer-copy.psd` with no adjustment, which tests mode/depth decoding on its own. `rgb8/` adds a masked adjustment with opacity, a clipped adjustment with a blend mode, and a stack |
+| `layer-comps/` | 4 | Layer comps captured with Appearance, Position and Visibility: four comps of two layers (blend mode, opacity, fill opacity, a stroke layer style, a hidden layer). The same document is saved once per comp with that comp applied (`appearance-applied-<comp>.psd`), so each merged composite is Photoshop's rendering of that comp |
 
 File names give the feature and its parameters (`bevel-inner-chisel-soft`,
 `sf-unsharp-mask-300-r5-t8`). When Photoshop doesn't offer an adjustment in a mode or depth
@@ -223,6 +225,10 @@ every embedded smart object to 1 MiB with zeros, and that padding compresses awa
   `do javascript file` fails with error 8800, so the script's source text is passed instead.
 - The only permission needed is macOS **Automation** for your terminal → Adobe Photoshop, which
   macOS asks for on the first run. Nothing is clicked, and Photoshop doesn't need focus.
+- On Windows, `tools/photoshop-oracles/run-jsx-windows.sh` does the same job. Photoshop for
+  Windows runs a `.jsx` passed on its command line, but without arguments and without returning
+  a value, so the runner writes a small wrapper that evaluates the script with its arguments and
+  writes the result to a file, and waits for that file.
 - `generate.jsx` works on one small document at a time: it saves the document into `photoshop/`
   and closes it. While it runs it sets Units to pixels, Maximize Compatibility to Always and
   dialogs off, and puts these preferences back when it finishes.
@@ -263,9 +269,12 @@ the same fonts are installed.
 
 ### Regenerating
 
-You need a Mac with Photoshop installed. On the first run, grant your terminal Automation
-access to Adobe Photoshop (System Settings › Privacy & Security › Automation). The fonts listed
-above must be installed.
+You need Photoshop on a Mac, or on Windows (natively from a POSIX shell such as Git Bash, or under
+Wine). On a Mac, grant your terminal Automation access to Adobe Photoshop on the first run (System
+Settings › Privacy & Security › Automation). On Windows, start Photoshop first and leave it open;
+`generate.sh` then uses `run-jsx-windows.sh` (set `PHOTOSHOP_EXE` if Photoshop isn't found, for
+example `PHOTOSHOP_EXE='wine "C:\Program Files\Adobe\Adobe Photoshop 2025\Photoshop.exe"'`).
+The fonts listed above must be installed.
 
 ```sh
 tools/photoshop-oracles/generate.sh               # everything (a few minutes)
