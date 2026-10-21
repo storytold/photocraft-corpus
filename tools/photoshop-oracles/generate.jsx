@@ -1061,6 +1061,79 @@ function adjustmentCases() {
 }
 
 // ---------------------------------------------------------------------------------------------
+// Layer comps
+// ---------------------------------------------------------------------------------------------
+
+/// Layer comps captured with Appearance (blend mode, opacity, fill opacity, layer style),
+/// Position and Visibility (positions are left alone: a scripted translate is recorded only as
+/// the effects reference point `FXRefPoint`, and applying the comp does not move the layer). Each comp is a different look of the same two layers; the file
+/// is saved once per comp with that comp applied, so its merged composite is Photoshop's own
+/// rendering of the comp, and its 1065 resource / `cmls` items hold every comp's settings.
+var LC = 96;
+
+function layerCompDoc() {
+    var doc = newDoc("layer comps", LC, LC, DocumentFill.WHITE);
+    gradient(0, 0, LC, LC, [[0, [40, 120, 200]], [1, [250, 230, 120]]]);
+    var a = newLayer("square");
+    fillRect(12, 12, 60, 60, [210, 50, 40]);
+    var b = newLayer("disc");
+    fillEllipse(36, 36, 84, 84, [40, 170, 90]);
+    return { doc: doc, a: a, b: b };
+}
+
+/// The comps of layerCompDoc(): a function per comp that sets the layers to that look.
+var LAYER_COMPS = [
+    ["plain", function (s) {
+        s.a.blendMode = BlendMode.NORMAL; s.a.opacity = 100; s.a.fillOpacity = 100;
+        s.b.blendMode = BlendMode.NORMAL; s.b.opacity = 100; s.b.fillOpacity = 100;
+    }],
+    ["multiply-screen", function (s) {
+        s.a.blendMode = BlendMode.MULTIPLY; s.a.opacity = 40; s.a.fillOpacity = 100;
+        s.b.blendMode = BlendMode.SCREEN; s.b.opacity = 100; s.b.fillOpacity = 70;
+    }],
+    ["styled-difference", function (s) {
+        s.doc.activeLayer = s.a;
+        setStyles({ FrFX: strokeFx(4, "OutF", [20, 20, 160]) });
+        s.a.blendMode = BlendMode.NORMAL; s.a.opacity = 80; s.a.fillOpacity = 30;
+        s.b.blendMode = BlendMode.DIFFERENCE; s.b.opacity = 60; s.b.fillOpacity = 100;
+    }],
+    ["hidden-disc", function (s) {
+        s.a.blendMode = BlendMode.OVERLAY; s.a.opacity = 100; s.a.fillOpacity = 100;
+        s.b.visible = false;
+    }]
+];
+
+function clearStyle(layer) {
+    app.activeDocument.activeLayer = layer;
+    try {
+        var d = new ActionDescriptor();
+        var ref = new ActionReference();
+        ref.putEnumerated(cTID("Lyr "), cTID("Ordn"), cTID("Trgt"));
+        d.putReference(cTID("null"), ref);
+        executeAction(sTID("disableLayerStyle"), d, DialogModes.NO);
+    } catch (e) {}
+}
+
+function layerCompCases() {
+    for (var applied = 0; applied < LAYER_COMPS.length; applied++) {
+        (function (applied) {
+            run("layer-comps/appearance-applied-" + LAYER_COMPS[applied][0] + ".psd", function () {
+                var s = layerCompDoc();
+                for (var i = 0; i < LAYER_COMPS.length; i++) {
+                    // Every comp starts from the same baseline: no style, both layers visible.
+                    clearStyle(s.a);
+                    s.b.visible = true;
+                    LAYER_COMPS[i][1](s);
+                    s.doc.layerComps.add(LAYER_COMPS[i][0], "", true, true, true);
+                }
+                s.doc.layerComps[applied].apply();
+                return s.doc;
+            });
+        })(applied);
+    }
+}
+
+// ---------------------------------------------------------------------------------------------
 // Main
 // ---------------------------------------------------------------------------------------------
 
@@ -1079,6 +1152,7 @@ try {
     effectCases();
     textCases();
     adjustmentCases();
+    layerCompCases();
 } finally {
     app.preferences.rulerUnits = savedPrefs.ruler;
     app.preferences.typeUnits = savedPrefs.type;
