@@ -52,7 +52,7 @@ history, and submodules cause init and detached-HEAD friction for contributors.
    `cargo xtask test-corpus --local -- --nocapture`. It copies `photoshop/` from this clone and
    runs every corpus test (cargo feature `corpus`) with per-file tables.
 5. **Always update `SHA256SUMS`** in the same commit:
-   `find photoshop -name '*.psd' | LC_ALL=C sort | xargs shasum -a 256 > SHA256SUMS`
+   `find photoshop \( -name '*.psd' -o -name '*.tif' \) | LC_ALL=C sort | xargs shasum -a 256 > SHA256SUMS`
    (add any new source folder to the `find`).
 6. **Make one commit per batch**, with a clear message (what changed, which Photoshop version),
    then push to `main`.

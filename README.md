@@ -21,7 +21,7 @@
 
 <p align="center">
   <img alt="License: MIT OR Apache-2.0" src="https://img.shields.io/badge/license-MIT%20OR%20Apache--2.0-blue">
-  <img alt="Files: 258 PSDs" src="https://img.shields.io/badge/photoshop-258%20PSDs-2f7bf5">
+  <img alt="Files: 265 PSDs, 12 TIFFs" src="https://img.shields.io/badge/photoshop-265%20PSDs%2C%2012%20TIFFs-2f7bf5">
 </p>
 
 <p align="center">
@@ -112,7 +112,7 @@ There is one top-level folder per source, i.e. per application that authored the
 
 | Folder | Source | Files |
 |---|---|---:|
-| [`photoshop/`](#photoshop-photoshop-oracle-psds) | Adobe Photoshop 2026 (27.10), driven by [`tools/photoshop-oracles/`](tools/photoshop-oracles) | 258 |
+| [`photoshop/`](#photoshop-photoshop-oracle-psds) | Adobe Photoshop 2026 (27.10 and 27.11), driven by [`tools/photoshop-oracles/`](tools/photoshop-oracles) | 277 |
 
 The repository also contains:
 
@@ -166,7 +166,7 @@ change behind a pin.
    `cargo xtask test-corpus --local`, which copies from this clone and runs the corpus tests (see
    [Local layout](#local-layout-authoring-clone-consuming-copy-local-mode)).
 4. **Refresh the manifest**, covering every folder:
-   `find photoshop -name '*.psd' | LC_ALL=C sort | xargs shasum -a 256 > SHA256SUMS`
+   `find photoshop \( -name '*.psd' -o -name '*.tif' \) | LC_ALL=C sort | xargs shasum -a 256 > SHA256SUMS`
 5. **Make one commit per batch**, with a message that names what changed and the application
    version.
 
@@ -196,17 +196,19 @@ history** (no force-push, no history rewrite).
 
 ## `photoshop/`: Photoshop oracle PSDs
 
-256 small PSDs created from scratch with **Adobe Photoshop 2026 (27.10.0) on macOS** by the
-ExtendScript generator in [`tools/photoshop-oracles/`](tools/photoshop-oracles). Each file is
-saved with **Maximize Compatibility** turned on, so its merged composite is Photoshop's own
+265 small PSDs and 12 TIFFs created from scratch with **Adobe Photoshop 2026 on macOS** (27.10.0;
+`spot-channels/` with 27.11.0) by the ExtendScript generator in
+[`tools/photoshop-oracles/`](tools/photoshop-oracles). Each PSD is saved with
+**Maximize Compatibility** turned on, so its merged composite is Photoshop's own
 rendering of the layer stack. PhotoCraft compares its import and re-render against that composite.
 
 | Directory | Files | What it exercises |
 |---|---:|---|
 | `smart-filters/` | 30 | Smart objects (128×128) with smart filters: Gaussian Blur (r 1.5/4/20), Unsharp Mask, Add Noise (uniform, gaussian mono), Motion Blur, High Pass, Median, Minimum, Maximum, Box Blur, Emboss, Mosaic, Levels, Curves, Shadows/Highlights; filter masks (gradient, hard, ellipse); filter blend mode/opacity; stacked filters; transformed smart objects; layer opacity/blend over a smart object |
 | `effects/` | 37 | Bevel & Emboss in every style (outer, inner, emboss, pillow, stroke emboss) × technique (smooth, chisel hard, chisel soft); direction, soften, angle/altitude/depth; contours and gloss contours (with and without anti-aliasing, ranges); stroke emboss with inside/center strokes; Satin; outer glow (soft, precise + spread, contour, gradient); inner glow (edge, center + choke, contour); a combination |
-| `text/` | 54 | Point and paragraph type: style runs (sizes, colours, fonts), tracking, kerning (metrics / optical / off), manual leading, baseline shift, faux bold/italic, all caps, small caps (faux and OpenType), super/subscript, point alignment, paragraph alignment and all four justifications, hyphenation on/off, indents and space before/after, horizontal/vertical scale, underline/strikethrough, vertical Latin (rotated/upright) and CJK text, a vertical paragraph, five warps, text on a closed and an open path, OpenType ligatures (on/off), discretionary ligatures, fractions, old-style figures, ordinals, the five anti-alias modes, type with layer styles and with a blend mode |
+| `text/` | 56 | Point and paragraph type: style runs (sizes, colours, fonts), tracking, kerning (metrics / optical / off), manual leading, baseline shift, faux bold/italic, all caps, small caps (faux and OpenType), super/subscript, point alignment, paragraph alignment and all four justifications, hyphenation on/off, indents and space before/after, horizontal/vertical scale, underline/strikethrough, vertical Latin (rotated/upright) and CJK text, a vertical paragraph, five warps, text on a closed and an open path, OpenType ligatures (on/off), discretionary ligatures, fractions, old-style figures, ordinals, the five anti-alias modes, type with layer styles and with a blend mode |
 | `adjustments/<mode><bits>/` | 135 | Adjustment layers in RGB 8/16/32, Grayscale 8/16/32, CMYK 8/16 and Lab 8/16: Levels, Curves (composite and per channel), Brightness/Contrast (modern and legacy), Exposure, Vibrance, Hue/Saturation (and Colorize), Color Balance, Black & White with tint, Photo Filter, Channel Mixer, Gradient Map, Selective Color, Invert, Posterize, Threshold, where Photoshop offers them in that mode and depth. Each directory has `baseline-layer-copy.psd` with no adjustment, which tests mode/depth decoding on its own. `rgb8/` adds a masked adjustment with opacity, a clipped adjustment with a blend mode, and a stack |
+| `spot-channels/` | 19 | Spot and alpha channels, saved as PSD (7) and as **TIFF** (12). Each 64×64 document has a red "Art" layer and three extra channels in this order: Spot A (ink RGB 0/160/255, solidity 0 %, columns of 100 / 25 / 75 / 0 % ink), Alpha 1 (Masked Areas, a stored selection of the top quarter) and Spot B (ink RGB 255/0/160, solidity 50 %, ink in the top half); `psd-rgb8-spot-only` has Spot A alone. PSDs in RGB 8/16, CMYK 8, Gray 8, Lab 8 and transparent RGB 8 (opaque, 50 % and empty strips). TIFFs flat in RGB 8 (IBM and Mac byte order, LZW), RGB 16, CMYK 8, Gray 8 and Lab 8, layered in RGB 8, and transparent RGB 8 with layers on/off × Save Transparency on/off. TIFFs have no ICC profile, annotations or pyramid |
 
 File names give the feature and its parameters (`bevel-inner-chisel-soft`,
 `sf-unsharp-mask-300-r5-t8`). When Photoshop doesn't offer an adjustment in a mode or depth
@@ -232,6 +234,11 @@ every embedded smart object to 1 MiB with zeros, and that padding compresses awa
 - No ICC profiles are embedded (`embedColorProfile = false`). CMYK and Lab files were converted
   from RGB with Photoshop's default colour settings at generation time, so their pixel values
   are just data.
+- `spot-channels/` documents are created directly in their mode and depth. Spot and alpha
+  channels are painted with `GrayColor` fills, which land exactly in every mode; an RGB fill goes
+  through the Gray working space outside RGB (191 becomes 175). Before saving, the generator
+  checks each extra channel's order, kind and histogram: a level one off is noted, and any other
+  mismatch fails the file.
 - Smart filters are applied through Action Manager events on a smart object. Photoshop 27.10
   accepts Levels, Curves and Shadows/Highlights as smart filters. **Add Noise** stores its
   random seed (`FlRs`), so Photoshop re-renders it identically.
@@ -270,12 +277,13 @@ above must be installed.
 ```sh
 tools/photoshop-oracles/generate.sh               # everything (a few minutes)
 tools/photoshop-oracles/generate.sh '^text/'      # or a subset, by regular expression on the path
-find photoshop -name '*.psd' | LC_ALL=C sort | xargs shasum -a 256 > SHA256SUMS
+find photoshop \( -name '*.psd' -o -name '*.tif' \) | LC_ALL=C sort | xargs shasum -a 256 > SHA256SUMS
 ```
 
 The script prints one line per file:
 
-- `ok`: generated and saved
+- `ok`: generated and saved (a note in parentheses records an extra-channel level that came out
+  one off, for example after a mode conversion)
 - `skip`: not available in that mode or depth
 - `FAIL`: something went wrong
 

@@ -175,10 +175,16 @@ function gaussian(r) { filter("GsnB", function (d) { unit(d, "Rds ", "#Pxl", r);
 // ---------------------------------------------------------------------------------------------
 
 var RESULTS = [];
+var NOTES = []; // per-case remarks, appended to the case's "ok" line
 
-function save(doc, rel) {
+function outFile(rel) {
     var f = new File(OUT + "/" + rel);
     if (!f.parent.exists) f.parent.create();
+    return f;
+}
+
+function save(doc, rel) {
+    var f = outFile(rel);
     var o = new PhotoshopSaveOptions();
     o.alphaChannels = true;
     o.annotations = true;
@@ -190,14 +196,16 @@ function save(doc, rel) {
     doc.saveAs(f, o, true, Extension.LOWERCASE);
 }
 
-/// Run one case: `fn(doc?)` builds and returns the document; it is saved as `rel` and closed.
-function run(rel, fn) {
+/// Run one case: `fn(doc?)` builds and returns the document; it is saved as `rel` (with
+/// `saveFn(doc, rel)` if given, else as a PSD) and closed.
+function run(rel, fn, saveFn) {
     if (FILTER && !FILTER.test(rel)) return;
     var doc = null;
+    NOTES = [];
     try {
         doc = fn();
-        save(doc, rel);
-        RESULTS.push("ok    " + rel);
+        (saveFn || save)(doc, rel);
+        RESULTS.push("ok    " + rel + (NOTES.length ? "  (" + NOTES.join("; ") + ")" : ""));
     } catch (e) {
         if (/^SKIP/.test(e.message)) RESULTS.push("skip  " + rel + ": " + e.message);
         else RESULTS.push("FAIL  " + rel + ": " + e + (e.line ? " (line " + e.line + ")" : ""));
@@ -1061,6 +1069,165 @@ function adjustmentCases() {
 }
 
 // ---------------------------------------------------------------------------------------------
+// Spot and alpha channels, saved as PSD and as TIFF
+// ---------------------------------------------------------------------------------------------
+
+var SPOT = 64;
+
+/// Extra channels, in creation order. Cells are [l, t, r, b, gray]; gray is the channel value as
+/// the Channels panel shows it, so 0 (black) is full ink in a spot channel and masked in an alpha
+/// channel. Spot A has four ink levels (100 %, 25 %, 75 %, none) and solidity 0 %; Spot B has
+/// solidity 50 %.
+var SPOT_A = { name: "Spot A", kind: ChannelType.SPOTCOLOR, rgb: [0, 160, 255], solidity: 0, cells: [[0, 0, 16, SPOT, 0], [16, 0, 32, SPOT, 191], [32, 0, 48, SPOT, 64], [48, 0, SPOT, SPOT, 255]] };
+var ALPHA_1 = { name: "Alpha 1", kind: ChannelType.MASKEDAREA, cells: [[0, 0, SPOT, 16, 255], [0, 16, SPOT, SPOT, 0]] };
+var SPOT_B = { name: "Spot B", kind: ChannelType.SPOTCOLOR, rgb: [255, 0, 160], solidity: 50, cells: [[0, 0, SPOT, 32, 0], [0, 32, SPOT, SPOT, 255]] };
+
+/// Paint gray levels into one extra channel. A GrayColor fill lands exactly in every mode; an
+/// RGB fill goes through the Gray working space outside RGB (191 becomes 175).
+function paintChannel(doc, ch, cells) {
+    doc.activeChannels = [ch];
+    for (var i = 0; i < cells.length; i++) {
+        var c = cells[i];
+        selectRect(c[0], c[1], c[2], c[3]);
+        var g = new SolidColor();
+        g.gray.gray = (255 - c[4]) / 2.55;
+        doc.selection.fill(g);
+    }
+    doc.selection.deselect();
+    doc.activeChannels = doc.componentChannels;
+}
+
+function addSpot(doc, s) {
+    var c = doc.channels.add();
+    c.kind = ChannelType.SPOTCOLOR;
+    c.name = s.name;
+    c.color = solid(s.rgb);
+    c.opacity = s.solidity; // solidity, in percent
+    paintChannel(doc, c, s.cells);
+}
+
+/// An alpha channel holding a stored selection: the first cell (white = selected).
+function addAlpha(doc, s) {
+    var c = doc.channels.add();
+    c.kind = ChannelType.MASKEDAREA;
+    c.name = s.name;
+    var r = s.cells[0];
+    selectRect(r[0], r[1], r[2], r[3]);
+    doc.selection.store(c);
+    doc.selection.deselect();
+}
+
+/// Check the extra channels' order, names and kinds, and their histograms (8-bit scale at any
+/// depth) against the cells. A level that comes out one off is noted; anything else fails.
+/// Leaves the Channels panel as Photoshop does: composite and spot channels shown, alpha hidden.
+function checkChannels(doc, want) {
+    var extra = [];
+    for (var i = 0; i < doc.channels.length; i++) {
+        if (doc.channels[i].kind !== ChannelType.COMPONENT) extra.push(doc.channels[i]);
+    }
+    var names = [];
+    for (var i = 0; i < extra.length; i++) names.push(extra[i].name);
+    if (extra.length !== want.length) throw new Error("extra channels are " + names.join(", "));
+    for (var i = 0; i < want.length; i++) {
+        var ch = extra[i], w = want[i];
+        if (ch.name !== w.name || ch.kind !== w.kind) throw new Error("extra channel " + i + " is " + ch.name + " (" + ch.kind + ")");
+        var exp = {};
+        for (var j = 0; j < w.cells.length; j++) {
+            var c = w.cells[j];
+            exp[c[4]] = (exp[c[4]] || 0) + (c[2] - c[0]) * (c[3] - c[1]);
+        }
+        ch.visible = true; // Photoshop only gives histograms of visible channels
+        var h = ch.histogram, got = [], wanted = [];
+        for (var v = 0; v < 256; v++) {
+            if (h[v]) got.push([v, h[v]]);
+            if (exp[v]) wanted.push([v, exp[v]]);
+        }
+        var diffs = [], bad = got.length !== wanted.length;
+        for (var k = 0; !bad && k < got.length; k++) {
+            if (got[k][1] !== wanted[k][1] || Math.abs(got[k][0] - wanted[k][0]) > 1) bad = true;
+            else if (got[k][0] !== wanted[k][0]) diffs.push(wanted[k][0] + "->" + got[k][0]);
+        }
+        if (bad) throw new Error(ch.name + " histogram " + got.join(" ") + ", want " + wanted.join(" "));
+        if (diffs.length) NOTES.push(ch.name + " " + diffs.join(" "));
+    }
+    doc.activeChannels = doc.componentChannels;
+    for (var i = 0; i < extra.length; i++) extra[i].visible = extra[i].kind === ChannelType.SPOTCOLOR;
+}
+
+/// 64x64 document made directly in `mode` and `bits`. Opaque: white Background and an "Art" layer
+/// with red at x 0..32. Transparent: "Art" alone, red at x 0..32, red at 50 % at x 32..48, empty
+/// at x 48..64. Then Spot A, Alpha 1 and Spot B, in that order (Spot A alone when `spotOnly`).
+function spotDoc(name, mode, bits, transparent, spotOnly) {
+    var doc = app.documents.add(px(SPOT), px(SPOT), 72, name, MODES[mode], transparent ? DocumentFill.TRANSPARENT : DocumentFill.WHITE, 1, BITS[bits]);
+    var art = transparent ? doc.activeLayer : newLayer("Art");
+    art.name = "Art";
+    fillRect(0, 0, 32, SPOT, [255, 0, 0]);
+    if (transparent) {
+        selectRect(32, 0, 48, SPOT);
+        doc.selection.fill(solid([255, 0, 0]), ColorBlendMode.NORMAL, 50);
+        doc.selection.deselect();
+    }
+    addSpot(doc, SPOT_A);
+    if (spotOnly) {
+        checkChannels(doc, [SPOT_A]);
+        return doc;
+    }
+    addAlpha(doc, ALPHA_1);
+    addSpot(doc, SPOT_B);
+    checkChannels(doc, [SPOT_A, ALPHA_1, SPOT_B]);
+    return doc;
+}
+
+/// A `run()` save function writing a TIFF with alpha and spot channels, no profile, no
+/// annotations and no pyramid. `o`: layers, transparency, byteOrder (IBM), compression (none).
+function saveTiff(o) {
+    return function (doc, rel) {
+        var t = new TiffSaveOptions();
+        t.alphaChannels = true;
+        t.spotColors = true;
+        t.embedColorProfile = false;
+        t.annotations = false;
+        t.saveImagePyramid = false;
+        t.layers = o.layers;
+        if (o.layers) t.layerCompression = LayerCompression.RLE;
+        t.transparency = o.transparency;
+        t.byteOrder = o.byteOrder || ByteOrder.IBM;
+        t.imageCompression = o.compression || TIFFEncoding.NONE;
+        doc.saveAs(outFile(rel), t, true, Extension.LOWERCASE);
+    };
+}
+
+function spotChannelCases() {
+    var dir = "spot-channels/";
+    function psd(name, mode, bits, transparent, spotOnly) {
+        run(dir + name + ".psd", function () { return spotDoc(name, mode, bits, transparent, spotOnly); });
+    }
+    function tif(name, mode, bits, transparent, o) {
+        run(dir + name + ".tif", function () { return spotDoc(name, mode, bits, transparent, false); }, saveTiff(o));
+    }
+    psd("psd-rgb8-spot-only", "rgb", 8, false, true);
+    psd("psd-rgb8", "rgb", 8, false);
+    psd("psd-rgb16", "rgb", 16, false);
+    psd("psd-cmyk8", "cmyk", 8, false);
+    psd("psd-gray8", "gray", 8, false);
+    psd("psd-lab8", "lab", 8, false);
+    psd("psd-rgb8-transparent", "rgb", 8, true);
+    var flat = { layers: false, transparency: false };
+    tif("tiff-rgb8-flat-ibm", "rgb", 8, false, flat);
+    tif("tiff-rgb8-flat-mac", "rgb", 8, false, { layers: false, transparency: false, byteOrder: ByteOrder.MACOS });
+    tif("tiff-rgb8-flat-lzw", "rgb", 8, false, { layers: false, transparency: false, compression: TIFFEncoding.TIFFLZW });
+    tif("tiff-rgb8-layered", "rgb", 8, false, { layers: true, transparency: false });
+    tif("tiff-rgb16-flat", "rgb", 16, false, flat);
+    tif("tiff-cmyk8-flat", "cmyk", 8, false, flat);
+    tif("tiff-gray8-flat", "gray", 8, false, flat);
+    tif("tiff-lab8-flat", "lab", 8, false, flat);
+    tif("tiff-rgb8-transparent-layered-transon", "rgb", 8, true, { layers: true, transparency: true });
+    tif("tiff-rgb8-transparent-layered-transoff", "rgb", 8, true, { layers: true, transparency: false });
+    tif("tiff-rgb8-transparent-flat-transon", "rgb", 8, true, { layers: false, transparency: true });
+    tif("tiff-rgb8-transparent-flat-transoff", "rgb", 8, true, flat);
+}
+
+// ---------------------------------------------------------------------------------------------
 // Main
 // ---------------------------------------------------------------------------------------------
 
@@ -1079,6 +1246,7 @@ try {
     effectCases();
     textCases();
     adjustmentCases();
+    spotChannelCases();
 } finally {
     app.preferences.rulerUnits = savedPrefs.ruler;
     app.preferences.typeUnits = savedPrefs.type;
