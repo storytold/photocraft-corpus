@@ -47,7 +47,7 @@
 **Contents:** [What this is](#what-this-is) · [Using this from PhotoCraft](#using-this-from-photocraft) · [Local layout](#local-layout-authoring-clone-consuming-copy-local-mode) ·
 [Layout](#layout) · [Fetching](#fetching) · [Verifying](#verifying) ·
 [Adding or regenerating files](#adding-or-regenerating-files) · [Pinning](#pinning-workflow) ·
-[Size guidance](#size-guidance) · [`photoshop/`](#photoshop-photoshop-oracle-psds) · [`gimp/`](#gimp-gimp-xcf-oracles) ·
+[Size guidance](#size-guidance) · [`photoshop/`](#photoshop-photoshop-oracle-psds) · [`gimp/`](#gimp-gimp-xcf-oracles) · [`jxl/`](#jxl-jpeg-xl-oracles) ·
 [Provenance](#provenance) · [The Crafting Apps](#the-crafting-apps) · [License and credits](#license-and-credits)
 
 ## What this is
@@ -69,6 +69,7 @@ PhotoCraft is the primary consumer. From a PhotoCraft checkout:
 ```sh
 cargo xtask corpus --photoshop   # this repo's photoshop/ at the pinned commit -> corpus/photoshop
 cargo xtask corpus --gimp        # this repo's gimp/ at its pinned commit -> corpus/gimp
+cargo xtask corpus --jxl         # this repo's jxl/ at its pinned commit -> corpus/jxl
 cargo xtask corpus --all         # every corpus: this repo's sets plus psd-tools, ag-psd and PngSuite
 cargo xtask corpus               # list where each corpus lives and which commit is pinned
 cargo xtask test-corpus          # fetch everything, then run every corpus test
@@ -80,7 +81,8 @@ cargo xtask test-corpus          # fetch everything, then run every corpus test
   [`xtask/src/corpus_pins.rs`](https://github.com/storytold/photocraft/blob/main/xtask/src/corpus_pins.rs) (every
   corpus pin is in that one file). The manifest the download is checked against is
   `xtask/photoshop-corpus.sha256`. `gimp/` has its own pin (`PHOTOCRAFT_CORPUS_GIMP_COMMIT`) and manifest
-  (`xtask/gimp-corpus.sha256`), fetched by `cargo xtask corpus --gimp`, so the two sets move independently.
+  (`xtask/gimp-corpus.sha256`), fetched by `cargo xtask corpus --gimp`, and `jxl/` likewise
+  (`PHOTOCRAFT_CORPUS_JXL_COMMIT`, `xtask/jxl-corpus.sha256`, `--jxl`), so the sets move independently.
 - **Bumping the pin:** in a PhotoCraft PR, set `PHOTOCRAFT_CORPUS_COMMIT` to the new commit here, then run
   `cargo xtask corpus --photoshop --update-manifest` and commit the manifest diff. Re-run the
   tests below and raise their floors if more files pass (see [Pinning](#pinning-workflow)).
@@ -120,6 +122,7 @@ There is one top-level folder per source, i.e. per application that authored the
 |---|---|---:|
 | [`photoshop/`](#photoshop-photoshop-oracle-psds) | Adobe Photoshop 2026 (27.10), driven by [`tools/photoshop-oracles/`](tools/photoshop-oracles) | 258 |
 | [`gimp/`](#gimp-gimp-xcf-oracles) | GIMP 3.2.6, driven by [`tools/gimp-xcf/`](tools/gimp-xcf) | 28 |
+| [`jxl/`](#jxl-jpeg-xl-oracles) | libjxl's `cjxl` 0.7, driven by [`tools/jxl-fixtures/`](tools/jxl-fixtures) | 13 |
 
 The repository also contains:
 
@@ -173,7 +176,7 @@ change behind a pin.
    `cargo xtask test-corpus --local`, which copies from this clone and runs the corpus tests (see
    [Local layout](#local-layout-authoring-clone-consuming-copy-local-mode)).
 4. **Refresh the manifest**, covering every folder:
-   `find photoshop gimp -type f \( -name '*.psd' -o -name '*.xcf' -o -name '*.png' \) | LC_ALL=C sort | xargs shasum -a 256 > SHA256SUMS`
+   `find photoshop gimp jxl -type f \( -name '*.psd' -o -name '*.xcf' -o -name '*.png' -o -name '*.jxl' -o -name '*.jpg' \) | LC_ALL=C sort | xargs shasum -a 256 > SHA256SUMS`
 5. **Make one commit per batch**, with a message that names what changed and the application
    version.
 
@@ -277,7 +280,7 @@ above must be installed.
 ```sh
 tools/photoshop-oracles/generate.sh               # everything (a few minutes)
 tools/photoshop-oracles/generate.sh '^text/'      # or a subset, by regular expression on the path
-find photoshop gimp -type f \( -name '*.psd' -o -name '*.xcf' -o -name '*.png' \) | LC_ALL=C sort | xargs shasum -a 256 > SHA256SUMS
+find photoshop gimp jxl -type f \( -name '*.psd' -o -name '*.xcf' -o -name '*.png' -o -name '*.jxl' -o -name '*.jpg' \) | LC_ALL=C sort | xargs shasum -a 256 > SHA256SUMS
 ```
 
 The script prints one line per file:
@@ -328,12 +331,44 @@ match PhotoCraft's composite closely; the default ones measure the known gap bet
 - GIMP stamps a modification time into the PNGs, so regenerated files differ byte for byte.
   Regenerate only when the set itself changes, then follow the [pinning workflow](#pinning-workflow).
 
+## `jxl/`: JPEG XL oracles
+
+12 tiny JPEG XL files (12×9) encoded by **libjxl's `cjxl` 0.7** through the Python generator in
+[`tools/jxl-fixtures/`](tools/jxl-fixtures), plus the source JPEG two of them were made from: 13
+files, 7 KB. PhotoCraft's JPEG XL decoder checks lossless files sample for sample against the
+procedural formulas the generator drew with, lossy ones by PSNR, and the metadata, orientation,
+JPEG reconstruction and animation cases against what was encoded.
+
+| File | What it exercises |
+|---|---|
+| `rgb8-lossless`, `rgba8-lossless`, `gray8-lossless` | 8-bit RGB, RGBA (alpha from fully transparent to opaque) and gray, bare codestreams, Modular lossless |
+| `graya16-lossless`, `rgb16-lossless` | 16-bit gray + alpha and RGB |
+| `rgb10-lossless` | 10-bit samples (decode to 16-bit) |
+| `rgb-f32-lossless` | 32-bit float RGB with values above 1.0 (from PFM) |
+| `rgb8-lossy` | VarDCT at distance 1 (XYB) |
+| `rgb8-p3` | lossless, tagged Display P3 as an enum colour encoding (no ICC) |
+| `exif-xmp-orient6` | a JPEG with Exif Orientation 6 re-encoded losslessly, wrapped in a container with Exif and XMP boxes |
+| `jpeg-recon` | the same JPEG transcoded losslessly with JPEG reconstruction data |
+| `animated` | a three-frame animation |
+| `exif-xmp-orient6.src.jpg` | the source JPEG of the two files above |
+
+### How it was generated
+
+- `tools/jxl-fixtures/jxl_fixtures.py` writes the source images itself (a minimal PNG writer, a
+  PFM, a Pillow JPEG and GIF) and runs `cjxl` on them; it needs `cjxl` 0.7 or newer on `PATH` and
+  Pillow. Every pixel is procedural; the formulas are mirrored by PhotoCraft's test.
+- The Exif block and the XMP packet are written by the script: Orientation 6 and the text
+  "PhotoCraft JPEG XL fixture", nothing else. No camera, no personal data, no ICC profile.
+- cjxl's output is deterministic for a given version, so regenerating with another libjxl may
+  change bytes; regenerate only when the set itself changes, then follow the
+  [pinning workflow](#pinning-workflow).
+
 ## Provenance
 
 Everything here is original work by the PhotoCraft contributors. The files are generated from
-scratch by the scripts in `tools/`, with Adobe Photoshop and GIMP used only as the authoring
-tools. Their output was observed clean-room: none of their code, presets, patterns, styles,
-contours, ICC profiles or other assets are included. Fonts are referenced by name only. The files
+scratch by the scripts in `tools/`, with Adobe Photoshop, GIMP and libjxl's `cjxl` used only as
+the authoring tools. Their output was observed clean-room: none of their code, presets, patterns,
+styles, contours, ICC profiles or other assets are included. Fonts are referenced by name only. The files
 contain no personal or private images and no copyrighted material we don't own.
 
 ## The Crafting Apps
@@ -385,8 +420,8 @@ PhotoCraft Corpus is dual-licensed under [MIT](LICENSE-MIT) or [Apache-2.0](LICE
 Copyright (c) 2026 ArtCraft Team and the PhotoCraft contributors. Required notices are in [NOTICE](NOTICE).
 
 This repository bundles no third-party assets. Every test file was generated from scratch by the
-scripts in [`tools/`](tools/), with Adobe Photoshop and GIMP as the authoring tools (see
-[Provenance](#provenance)). Fonts are referenced by name only.
+scripts in [`tools/`](tools/), with Adobe Photoshop, GIMP and libjxl's `cjxl` as the authoring
+tools (see [Provenance](#provenance)). Fonts are referenced by name only.
 
 The ArtCraft name, wordmark and logos in [`docs/brand/`](docs/brand/) are trademarks of the
 ArtCraft Team and are not covered by this license. They may be used only unmodified, and only as
