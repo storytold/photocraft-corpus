@@ -119,7 +119,7 @@ There is one top-level folder per source, i.e. per application that authored the
 | Folder | Source | Files |
 |---|---|---:|
 | [`photoshop/`](#photoshop-photoshop-oracle-psds) | Adobe Photoshop 2026 (27.10), driven by [`tools/photoshop-oracles/`](tools/photoshop-oracles) | 258 |
-| [`gimp/`](#gimp-gimp-xcf-oracles) | GIMP 3.2.6, driven by [`tools/gimp-xcf/`](tools/gimp-xcf) | 28 |
+| [`gimp/`](#gimp-gimp-xcf-oracles) | GIMP 3.2.6 and the documented historical releases, driven by [`tools/gimp-xcf/`](tools/gimp-xcf) | 106 |
 
 The repository also contains:
 
@@ -292,11 +292,14 @@ then follow the [pinning workflow](#pinning-workflow).
 
 ## `gimp/`: GIMP XCF oracles
 
-14 small XCF files (40×30, the text one 160×60) written by **GIMP 3.2.6** itself through the
-Python generator in [`tools/gimp-xcf/`](tools/gimp-xcf), each saved next to GIMP's own merged
-rendering of the visible layers as a PNG (`<name>.png`), 28 files and 251 KB in all. PhotoCraft's
-XCF reader checks the layer data it reads against the procedural formulas the generator drew with,
-and its composite of each file against the PNG.
+51 small XCF files written by **GIMP 3.2.6** and the documented historical releases,
+each saved next to the author's merged preview as a PNG, plus one original linked-resource PNG
+and three compressed wrappers: **106 files**. The modern Python generator and historical
+ScriptFu generators live in [`tools/gimp-xcf/`](tools/gimp-xcf). Adjacent provenance records
+distinguish ordinary authoring from historical graph bootstrap/rewrite observations.
+PhotoCraft tests check source storage against procedural facts and imported content against
+independently constructed native documents. PNG previews describe GIMP's source appearance;
+they do not require a second GIMP compositor in PhotoCraft.
 
 | File | What it exercises |
 |---|---|
@@ -309,6 +312,46 @@ and its composite of each file against the PNG.
 | `text` | a text layer (DejaVu Sans, referenced by name only) |
 | `channel` | an extra channel and a saved selection |
 | `legacy-modes` | Addition, Subtract, Divide, Dodge, Burn, Grain merge, HSV Hue, HSV Value, LCH Color, Hard light, Exclusion, Linear light |
+| `precision-u32-nonlinear` | RGB unsigned 32-bit endpoints and rounding boundaries, alpha, negative layer offset; precision 350 |
+| `precision-half-hdr` | RGB half subnormal/normal boundaries, signed zero and finite negative/above-one samples; precision 550 |
+| `precision-float-hdr` | RGB float subnormals, signed zero and finite HDR; precision 650 |
+| `precision-double-gray-boundaries` | Gray double midpoint ties for f32 narrowing, double/f32 subnormals, signed zero and finite HDR; precision 750 |
+| `text-unicode-fixed-markup` | Unicode multiline text, nested font resource, styled markup, fixed 120×60 box and negative offset; fonts referenced by name only |
+| `paths-fractional-open-closed` | Named open and closed cubic paths with fractional, negative and off-canvas coordinates |
+| `vector-solid-dashed-stroke` | Native vector layer referencing the closed path, solid fill, 3.5 px stroke, custom dash, round cap and bevel join |
+| `text-unicode-modified-cache`, `vector-modified-cache` | The same semantic source after a destructive fill and replaced procedural pixels; text modified flag 2 and vector flag 1 |
+| `floating-rgb-negative-offset`, `floating-channel-negative-offset` | Original 9×7 RGB/Gray floating pixels at (-2, 3), attached to a layer/channel; attachment and nonempty pixels survive stock reopen |
+| `link-relative-stored-pixels` | Original 12×9 `link-source.png`, relative resource locator, cached pixels and unaffected sibling |
+| `metadata-channel-view` | Unequal DPI, mm units, nonpersonal comment/Exif/XMP, selected channel, channel overlay and twelve sample points |
+| `effect-*-owner` | Brightness/contrast, levels, exposure and anisotropic Gaussian blur; active effect configuration on one owner and an unaffected sibling, 65% effect opacity and explicit full-white image-global source filter masks |
+| `effect-curves-per-channel-owner` | Original smooth master, red, blue and alpha curve anchors on an offset 19×13 owner, 65% effect opacity, full-white image-global filter mask and an unaffected sibling; public stock GIMP Curve API, with distinct serialized channel groups preserved by stock reopen/resave |
+| `effect-stack-common-mask`, `effect-stack-distinct-masks-disabled` | Two ordered effect stages, common or distinct selection-derived masks; one disabled stage in the distinct case |
+| `profile-original-{rgb,gray}-{linear,perceptual}` | Original generated ICC matrix/gamma profiles assigned to literal float samples; exact native bytes checked before save and after stock reopen |
+
+The precision batch uses varied small sizes, 96 dpi and a layer offset of (-2, 1). Its generator
+checks exact buffer bits before saving and after reopening XCF. Its PNGs are clipped previews;
+stored HDR/precision data must be checked against the procedural samples and native counterparts.
+`precision-u32-nonlinear.xcf.gz`, `.bz2` and `.xz` contain exactly the same XCF bytes, encoded
+independently with Python's standard library (gzip without filename/time, XZ CRC64/8 MiB dictionary).
+Set `PHOTOCRAFT_XCF_CASES=precision_variants` to regenerate only these eleven files. Each failed
+case makes generation fail, and the batch checks creator/path metadata on its reopened sources.
+
+The additional source batches can be selected independently with `PHOTOCRAFT_XCF_CASES`:
+`native_text_paths`, `floating_relationships`, `linked_resource`, `metadata_view`, `tone_effects`, `effect_stack_masks`, `per_channel_curve_effect`
+and `assigned_color_profiles` (comma-separated when selecting several). They add no input images,
+font files, presets or third-party profiles. The assigned profiles are original ICC v2 data built
+by the generator: requested gamma 1.8 (stored as ICC u8Fixed8 461/256), D50 white, and a deliberately synthetic RGB matrix with columns
+(.6, .2, .01), (.25, .7, .1), (.1142, .1, .7149). Color samples cycle through .125/.25/.5/.75,
+with alpha 1. Matrix/white XYZ values are rounded to ICC signed 15.16. The linear/perceptual source precision codes are 600/675. PNGs are GIMP source
+previews; native PhotoCraft compositing and editing require separate native expectations.
+
+The `per_channel_curve_effect` case uses only the public stock GIMP 3.2.6 Curve API. Its master, red, blue and alpha smooth anchors are distinct; the green curve is identity. The full-canvas selection is explicitly captured before clearing the live selection, so all source filter-mask samples remain white. The offset owner has procedural partial transparency. Stock reopen/resave preserves the channel groups and envelope. The PNG is a GIMP-source preview; native import tests verify declared PhotoCraft curve ordering/interpolation and alpha policies rather than requiring a GIMP spline evaluator.
+
+These batches require publication to the upstream corpus and a consuming-app pin update
+before ordinary upstream CI can fetch them. A fork branch alone does not establish pinned
+upstream reproducibility; source-dependent tests must remain opt-in until that integration. A mask-attached floating probe was excluded because stock GIMP 3.2.6
+drops its own floating layer on reopen; the valid floating batch covers RGB-layer and Gray-channel
+attachments only. Current public APIs do not author legacy movement links or monitored-link flags.
 
 `layers-8bit`, `groups`, `mask`, `text` and `legacy-modes` also come as `<name>-perceptual.xcf`:
 the same image with every layer set to blend and composite in gamma-encoded RGB (GIMP's default is
@@ -321,12 +364,87 @@ match PhotoCraft's composite closely; the default ones measure the known gap bet
   default, `GIMP="<command>"` picks another build) with the Python-Fu batch interpreter, which
   executes `xcf_fixtures.py` inside GIMP. No window opens and no preference is changed.
 - Every pixel is procedural: the formulas are in the script and mirrored by PhotoCraft's test.
-  Nothing is read from disk. The text layer uses the font GIMP's context defaults to (DejaVu
-  Sans), referenced by name only; its PNG oracle does not depend on the font being installed.
-- GIMP writes its own Exif into both files (dimensions, 300 dpi, and a small JPEG thumbnail in
-  the PNGs) and embeds no colour profile; the float file is linear light by its precision.
+  The precision, floating and assigned-profile batches read back only their own newly generated files to check storage and wrapping.
+  The text layer uses the font GIMP's context defaults to (DejaVu
+  Sans in the baseline authoring environment, Sans-serif resolving to Verdana for the new Windows text case), referenced by name only; its PNG oracle does not depend on the font being installed.
+- GIMP writes its own Exif into both files (dimensions, 300 dpi in the baseline and 96 dpi in the precision batch, and a small JPEG thumbnail in
+  the PNGs). Only the assigned-profile batch embeds profiles, all generated from original numeric data in the script; the baseline float file is linear light by its precision.
 - GIMP stamps a modification time into the PNGs, so regenerated files differ byte for byte.
   Regenerate only when the set itself changes, then follow the [pinning workflow](#pinning-workflow).
+
+### Historical GIMP 2.99.18 text and vector storage
+
+`historical-2-99-18-text-path-u8` and `historical-2-99-18-text-path-float` are
+independently authored and reopened with stock GIMP 2.99.18. They are genuine XCF
+version 19 files, with a 64×32 RGB canvas, editable black text at (0,0), and one
+original closed two-anchor Bezier path. The source precisions are U8 nonlinear
+(150) and float linear (600). Their PNG previews cover the document canvas;
+the wider text layer is clipped by that canvas, and the path is not stroked.
+Fonts are referenced by name only (`Sans-serif`, resolving to Cascadia Code
+Regular in this authoring environment). The source uses a `GimpFont` object;
+these files do not establish the older string-only font grammar or GEGL graphs.
+
+The version-specific ordinary ScriptFu generator is
+[`tools/gimp-xcf/historical_2_99_18.scm`](tools/gimp-xcf/historical_2_99_18.scm).
+It saves each XCF, deletes the original image, reopens the saved file in the
+same GIMP version, and queries its text, font, precision and exact path controls
+before exporting the PNG. Run its documented batch command with an isolated
+`GIMP3_DIRECTORY`, then run
+`python3 tools/gimp-xcf/historical_png_metadata.py gimp` to remove ancillary
+PNG profile/text metadata while preserving critical pixel chunks byte for byte.
+The exact official installer hash, commands, source facts, PNG dimensions and
+asset hashes are recorded in
+[`historical_2_99_18.provenance.json`](tools/gimp-xcf/historical_2_99_18.provenance.json).
+
+### Historical graph stock-writer cross-validation (disclosed bootstrap)
+
+`historical-2-99-18-graph-invert-linear` and
+`historical-2-99-18-graph-original-over-inverted` contain finite stored
+`gegl:gegl` effects in genuine stock-resaved XCF version 20. The initial inputs
+were **handcrafted documented-wire bootstrap seeds, not GIMP UI-authored files**.
+Stock GIMP 2.99.18 loaded each seed through ordinary `gimp-file-load`, wrote a
+new XCF through `gimp-xcf-save`, deleted the original image, reopened the saved
+bytes and exported a preview after ordinary public `gimp-drawable-merge-filters`.
+No development gate, internal setter or custom graph interpreter was used.
+
+The stock writer added an empty typed `error` string absent from the seed,
+normalized compositing fields and rewrote the stored coverage-mask records.
+The original 8×6 RGBA owner pixels remain unchanged in the saved XCF; the
+reopened preview changes all 48 pixels. Source alpha is partial: source pixel
+(0,0) is `(17,13,29,64)`, while the graph previews are `(199,199,199,112)` and
+`(176,176,176,148)`. This observes the source graph plus its outer filter
+compositing; it does not prescribe GIMP compositing for native PhotoCraft imports.
+
+The original bootstrap generator is
+[`historical_2_99_18_graph_seed.py`](tools/gimp-xcf/historical_2_99_18_graph_seed.py),
+and the ordinary stock resave/reopen generator is
+[`historical_2_99_18_graph.scm`](tools/gimp-xcf/historical_2_99_18_graph.scm).
+Exact commands, wire facts, full observed pixel arrays and hashes are in
+[`historical_2_99_18_graph.provenance.json`](tools/gimp-xcf/historical_2_99_18_graph.provenance.json).
+These qualify only the two listed finite graph forms, not arbitrary graph
+evaluation, current GIMP 3.2.6 graph acceptance or UI authoring.
+
+### GIMP 2.10.32 legacy string-font and PATHS producer witness
+
+`historical-2-10-32-legacy-text-path.{xcf,png}` was created from scratch by
+verified stock GIMP 2.10.32, saved, deleted and reopened in that same version
+through ordinary ScriptFu. Its actual XCF version is0 (`gimp xcf file`), with
+editable black `Legacy XCF` text at (0,0), size12pixels, a stored
+`(font "Sans-serif")` string and a closed original two-anchor Bezier path in
+`PROP_PATHS`23, record version3. This is independent historical producer
+evidence for that font form and path record, not GDynText or every historical
+PATHS version. The 64×32 PNG is the reopened canvas preview; the path is not
+stroked and the wider text is clipped to the canvas.
+
+The original version-specific generator is
+[`historical_2_10_32.scm`](tools/gimp-xcf/historical_2_10_32.scm).
+[`historical_2_10_32.provenance.json`](tools/gimp-xcf/historical_2_10_32.provenance.json)
+records the official installer checksum, matching extracted console binary,
+ordinary generation and PNG metadata-removal commands, source/readback facts
+and asset hashes. The reused console is an actual x86binary; rejected optional
+x86_64 GEGL extensions did not prevent the finite text/path save/reopen/export
+workflow. The receipt records those warnings without claiming full runtime
+qualification. No font/profile files or third-party art are included.
 
 ## Provenance
 
@@ -335,6 +453,70 @@ scratch by the scripts in `tools/`, with Adobe Photoshop and GIMP used only as t
 tools. Their output was observed clean-room: none of their code, presets, patterns, styles,
 contours, ICC profiles or other assets are included. Fonts are referenced by name only. The files
 contain no personal or private images and no copyrighted material we don't own.
+
+
+### Original named markup colors (stock GIMP 3.2.6 / Pango 1.58.2)
+
+`gimp/text-named-markup-colors.{xcf,png}` is a newly authored 300×70 editable
+text document, saved, deleted and reopened by stock GIMP. It retains original
+`foreground`, `color` and `fgcolor` span aliases, named CSS/X11 colors (including
+green/gray, numbered shades, spaced and mixed-case aliases) and alpha32768.
+The source markup is preserved verbatim. Unknown color markup is independently
+queried and rejected without replacing previous valid text. Font names only are
+referenced; no fonts, external profiles or third-party assets are bundled.
+`tools/gimp-xcf/named_markup_colors.py` reproduces the source and observations;
+the adjacent provenance JSON records exact RGB16/RGBA16 public Pango results,
+source markup, official producer hash, save/reopen facts and final asset hashes.
+The PNG has only pixel-defining chunks; native PhotoCraft text/shaping and
+compositing remain its own rules rather than a GIMP raster-fidelity requirement.
+
+
+### Original pre-endian-fix high-depth XCFs (stock GIMP 2.9.6)
+
+Six `gimp/historical-2-9-6-v{007,009,011}-{float,u16-asymmetric}-rle`
+XCF/PNG pairs are genuinely authored by an isolated official Windows x64 GIMP
+2.9.6 producer. The public ScriptFu/PDB generator creates original 8×6 RGB
+partial-alpha samples, saves, deletes and reopens each image, queries all 48
+actual native sample bytes and exports a preview. No input XCF or renamed
+version header is involved. U16 nonlinear precision250 uses asymmetric original
+values; F32 nonlinear precision650 uses original procedural colors.
+`tools/gimp-xcf/historical_2_9_6.scm` reproduces the batch; its adjacent provenance
+JSON records the official installer hash, all public pixel readbacks, exact wire
+facts and final asset hashes. Independent bounded wire inspection confirms all
+48 stored pixels equal the stock reopened public PDB bytes for every file.
+
+These genuine pre-version12 files store little-endian high-depth samples on
+this verified Windows x64 producer. The file headers and regenerated metadata
+do **not** identify producer byte order: external provenance establishes it.
+They must not be represented as universally little-endian historical XCFs.
+Version9 uses Overlay mode23; version11 uses Normal mode28 and 64-bit offsets.
+The official writer promotes version10 to11, so this batch does not qualify an
+independent version10 producer. Version8 F32 zlib now has a genuine ordinary GUI Save As witness: `historical-2-9-6-v008-float-zlib.xcf`. Both independent stock reopen passes and the decoded stored bytes match all48 original samples exactly; version8 U16 producer coverage is not claimed. Stock metadata is cleared before save and the writer
+regenerates nonpersonal dimensions/resolution XML; PNGs retain pixel chunks only.
+
+
+### Historical XCF8 internal zlib witness
+
+Use the verified stock GIMP 2.9.6 development runtime documented above. This is historical
+format coverage, separate from stable GIMP2.10.32/3.2.6 coverage. Generate the original
+v007 F32 case with `historical_2_9_6.scm`, open it in that runtime, choose **Save As**, give
+it the new name `historical-2-9-6-v008-float-zlib.xcf`, enable **Save this XCF file with
+better but slower compression**, and save. The public PDB has no compression selector;
+this normal GUI step is deliberately recorded rather than represented as fully automated.
+Do not change the precision, legacy Normal mode or original pixel data.
+
+Load `historical_2_9_6.scm` and `historical_2_9_6_v008.scm` in the same stock runtime,
+then call `(historical-v8-readback-and-preview "<saved-xcf>" "<facts-file>" "<preview-png>")`.
+Sanitize only the exported PNG's ancillary chunks with the existing
+`historical_png_metadata.py:sanitize` helper. The adjacent
+`historical_2_9_6_v008.provenance.json` records all48 raw reopened pixel vectors,
+source and preview hashes, compression2/precision650 and the external byte-order facts.
+It contains no local paths. The XCF is1499bytes and its sanitized PNG is129bytes.
+
+This qualifies this Windows F32 zlib producer case; it does not qualify every historical
+producer or version10. Repeated ordinary stock public-PDB saves using modern modes
+produced version11; no verified ordinary version10 authoring route is established.
+
 
 ## The Crafting Apps
 

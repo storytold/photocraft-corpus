@@ -1,0 +1,409 @@
+{
+  "gimpVersion": "3.2.6",
+  "pangoVersion": "1.58.2",
+  "colors": [
+    {
+      "name": "green",
+      "colorParse": true,
+      "rgb16": [
+        0,
+        32896,
+        0
+      ],
+      "parseWithAlpha": [
+        true,
+        65535
+      ],
+      "rgba16": [
+        0,
+        32896,
+        0,
+        65535
+      ],
+      "markupAccepted": true,
+      "markupText": "X"
+    },
+    {
+      "name": "gray",
+      "colorParse": true,
+      "rgb16": [
+        32896,
+        32896,
+        32896
+      ],
+      "parseWithAlpha": [
+        true,
+        65535
+      ],
+      "rgba16": [
+        32896,
+        32896,
+        32896,
+        65535
+      ],
+      "markupAccepted": true,
+      "markupText": "X"
+    },
+    {
+      "name": "grey",
+      "colorParse": true,
+      "rgb16": [
+        32896,
+        32896,
+        32896
+      ],
+      "parseWithAlpha": [
+        true,
+        65535
+      ],
+      "rgba16": [
+        32896,
+        32896,
+        32896,
+        65535
+      ],
+      "markupAccepted": true,
+      "markupText": "X"
+    },
+    {
+      "name": "maroon",
+      "colorParse": true,
+      "rgb16": [
+        32896,
+        0,
+        0
+      ],
+      "parseWithAlpha": [
+        true,
+        65535
+      ],
+      "rgba16": [
+        32896,
+        0,
+        0,
+        65535
+      ],
+      "markupAccepted": true,
+      "markupText": "X"
+    },
+    {
+      "name": "purple",
+      "colorParse": true,
+      "rgb16": [
+        32896,
+        0,
+        32896
+      ],
+      "parseWithAlpha": [
+        true,
+        65535
+      ],
+      "rgba16": [
+        32896,
+        0,
+        32896,
+        65535
+      ],
+      "markupAccepted": true,
+      "markupText": "X"
+    },
+    {
+      "name": "red",
+      "colorParse": true,
+      "rgb16": [
+        65535,
+        0,
+        0
+      ],
+      "parseWithAlpha": [
+        true,
+        65535
+      ],
+      "rgba16": [
+        65535,
+        0,
+        0,
+        65535
+      ],
+      "markupAccepted": true,
+      "markupText": "X"
+    },
+    {
+      "name": "LightGoldenrodYellow",
+      "colorParse": true,
+      "rgb16": [
+        64250,
+        64250,
+        53970
+      ],
+      "parseWithAlpha": [
+        true,
+        65535
+      ],
+      "rgba16": [
+        64250,
+        64250,
+        53970,
+        65535
+      ],
+      "markupAccepted": true,
+      "markupText": "X"
+    },
+    {
+      "name": "light goldenrod yellow",
+      "colorParse": true,
+      "rgb16": [
+        64250,
+        64250,
+        53970
+      ],
+      "parseWithAlpha": [
+        true,
+        65535
+      ],
+      "rgba16": [
+        64250,
+        64250,
+        53970,
+        65535
+      ],
+      "markupAccepted": true,
+      "markupText": "X"
+    },
+    {
+      "name": "LiGhTgOlDeNrOdYeLlOw",
+      "colorParse": true,
+      "rgb16": [
+        64250,
+        64250,
+        53970
+      ],
+      "parseWithAlpha": [
+        true,
+        65535
+      ],
+      "rgba16": [
+        64250,
+        64250,
+        53970,
+        65535
+      ],
+      "markupAccepted": true,
+      "markupText": "X"
+    },
+    {
+      "name": " lightgoldenrodyellow ",
+      "colorParse": false,
+      "rgb16": null,
+      "parseWithAlpha": [
+        false,
+        65535
+      ],
+      "rgba16": null,
+      "markupAccepted": false,
+      "markupError": "g-markup-error-quark: Value of 'foreground' attribute on <span> tag on line 1 could not be parsed; should be a color specification, not ' lightgoldenrodyellow ' (5)"
+    },
+    {
+      "name": "light\tgoldenrod\tyellow",
+      "colorParse": false,
+      "rgb16": null,
+      "parseWithAlpha": [
+        false,
+        65535
+      ],
+      "rgba16": null,
+      "markupAccepted": true,
+      "markupText": "X"
+    },
+    {
+      "name": "light-goldenrod-yellow",
+      "colorParse": false,
+      "rgb16": null,
+      "parseWithAlpha": [
+        false,
+        65535
+      ],
+      "rgba16": null,
+      "markupAccepted": false,
+      "markupError": "g-markup-error-quark: Value of 'foreground' attribute on <span> tag on line 1 could not be parsed; should be a color specification, not 'light-goldenrod-yellow' (5)"
+    },
+    {
+      "name": "light_goldenrod_yellow",
+      "colorParse": false,
+      "rgb16": null,
+      "parseWithAlpha": [
+        false,
+        65535
+      ],
+      "rgba16": null,
+      "markupAccepted": false,
+      "markupError": "g-markup-error-quark: Value of 'foreground' attribute on <span> tag on line 1 could not be parsed; should be a color specification, not 'light_goldenrod_yellow' (5)"
+    },
+    {
+      "name": "gray42",
+      "colorParse": true,
+      "rgb16": [
+        27499,
+        27499,
+        27499
+      ],
+      "parseWithAlpha": [
+        true,
+        65535
+      ],
+      "rgba16": [
+        27499,
+        27499,
+        27499,
+        65535
+      ],
+      "markupAccepted": true,
+      "markupText": "X"
+    },
+    {
+      "name": "grey42",
+      "colorParse": true,
+      "rgb16": [
+        27499,
+        27499,
+        27499
+      ],
+      "parseWithAlpha": [
+        true,
+        65535
+      ],
+      "rgba16": [
+        27499,
+        27499,
+        27499,
+        65535
+      ],
+      "markupAccepted": true,
+      "markupText": "X"
+    },
+    {
+      "name": "steelblue4",
+      "colorParse": true,
+      "rgb16": [
+        13878,
+        25700,
+        35723
+      ],
+      "parseWithAlpha": [
+        true,
+        65535
+      ],
+      "rgba16": [
+        13878,
+        25700,
+        35723,
+        65535
+      ],
+      "markupAccepted": true,
+      "markupText": "X"
+    },
+    {
+      "name": "RebeccaPurple",
+      "colorParse": true,
+      "rgb16": [
+        26214,
+        13107,
+        39321
+      ],
+      "parseWithAlpha": [
+        true,
+        65535
+      ],
+      "rgba16": [
+        26214,
+        13107,
+        39321,
+        65535
+      ],
+      "markupAccepted": true,
+      "markupText": "X"
+    },
+    {
+      "name": "transparent",
+      "colorParse": false,
+      "rgb16": null,
+      "parseWithAlpha": [
+        false,
+        65535
+      ],
+      "rgba16": null,
+      "markupAccepted": false,
+      "markupError": "g-markup-error-quark: Value of 'foreground' attribute on <span> tag on line 1 could not be parsed; should be a color specification, not 'transparent' (5)"
+    },
+    {
+      "name": "rgb(0,128,0)",
+      "colorParse": false,
+      "rgb16": null,
+      "parseWithAlpha": [
+        false,
+        65535
+      ],
+      "rgba16": null,
+      "markupAccepted": false,
+      "markupError": "g-markup-error-quark: Value of 'foreground' attribute on <span> tag on line 1 could not be parsed; should be a color specification, not 'rgb(0,128,0)' (5)"
+    },
+    {
+      "name": "unknown-color-name",
+      "colorParse": false,
+      "rgb16": null,
+      "parseWithAlpha": [
+        false,
+        65535
+      ],
+      "rgba16": null,
+      "markupAccepted": false,
+      "markupError": "g-markup-error-quark: Value of 'foreground' attribute on <span> tag on line 1 could not be parsed; should be a color specification, not 'unknown-color-name' (5)"
+    }
+  ],
+  "fixture": {
+    "file": "text-named-markup-colors.xcf",
+    "canvas": [
+      300,
+      70
+    ],
+    "sourceMarkup": "<markup><span foreground=\"green\">Green </span><span color=\"gray\">Gray </span><span fgcolor=\"LightGoldenrodYellow\" alpha=\"32768\">Gold </span><span foreground=\"gray42\">42 </span><span foreground=\"steelblue4\">Steel</span>\n<span foreground=\"grey\">Y </span><span foreground=\"maroon\">M </span><span foreground=\"purple\">P </span><span foreground=\"red\">R </span><span foreground=\"light goldenrod yellow\">L </span><span foreground=\"LiGhTgOlDeNrOdYeLlOw\">C </span><span foreground=\"RebeccaPurple\">B</span></markup>",
+    "setMarkupResult": true,
+    "storedReopenedMarkup": "<markup><span foreground=\"green\">Green </span><span color=\"gray\">Gray </span><span fgcolor=\"LightGoldenrodYellow\" alpha=\"32768\">Gold </span><span foreground=\"gray42\">42 </span><span foreground=\"steelblue4\">Steel</span>\n<span foreground=\"grey\">Y </span><span foreground=\"maroon\">M </span><span foreground=\"purple\">P </span><span foreground=\"red\">R </span><span foreground=\"light goldenrod yellow\">L </span><span foreground=\"LiGhTgOlDeNrOdYeLlOw\">C </span><span foreground=\"RebeccaPurple\">B</span></markup>",
+    "offsets": [
+      true,
+      3,
+      4
+    ],
+    "textSizePixels": 16.0,
+    "fontName": "Sans-serif",
+    "isText": true,
+    "sourcePrecision": 150,
+    "xcfSha256": "659e344536ad25e562cd5610ded0a7a14b980a4b107d66efb51b6477ba7385d9"
+  },
+  "unknownGimpMarkup": {
+    "setMarkupResult": false,
+    "readbackMarkup": "<markup><span color=\"green\">Original</span></markup>"
+  },
+  "producer": {
+    "gimp": "3.2.6",
+    "pango": "1.58.2",
+    "platform": "Windows x86_64",
+    "officialInstallerUrl": "https://download.gimp.org/gimp/v3.2/windows/gimp-3.2.6-setup.exe",
+    "officialInstallerSha256": "9337cccbc01d4098ee7a3dab215b3afbe6ece99c5287c92441d6f12cf541ebca",
+    "isolatedProfile": true,
+    "saveDeleteReopen": true,
+    "originalAssetsOnly": true,
+    "fontsReferencedByNameOnly": true,
+    "pngSanitization": "critical pixel chunks retained unchanged; ancillary metadata/profile chunks removed"
+  },
+  "assets": {
+    "gimp/text-named-markup-colors.xcf": {
+      "bytes": 9155,
+      "sha256": "659e344536ad25e562cd5610ded0a7a14b980a4b107d66efb51b6477ba7385d9"
+    },
+    "gimp/text-named-markup-colors.png": {
+      "bytes": 3329,
+      "sha256": "8259aa54ffe342f14cdf79ffd4852563d166ddd7bfa206b88108f0965c776eeb"
+    }
+  }
+}

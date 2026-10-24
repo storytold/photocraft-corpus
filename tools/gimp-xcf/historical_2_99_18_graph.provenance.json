@@ -1,0 +1,859 @@
+{
+  "bootstrapDisclosure": "Seeds were independently handcrafted from documented wire framing, NOT authored in GIMP UI. Stock2.99.18 loaded them and independently wrote new files; source behavior was observed only after deleting/reopening those stock-resaved bytes.",
+  "gateBypassUsed": false,
+  "ordinaryApi": [
+    "gimp-file-load",
+    "gimp-xcf-save",
+    "gimp-image-delete",
+    "gimp-drawable-merge-filters",
+    "file-png-save"
+  ],
+  "writerEvidence": "Writer added error:string empty argument absent from seeds, normalized composite-space/mode and rewrote mask/channel records. Original owner RGBA unchanged; mask stored all255. Thus not merely unknown-property copying.",
+  "scope": "Finite exact invert-linear and original-over-inverted aux/ref graph strings only; not arbitrary graph grammar/evaluator qualification or modern3.2.6 acceptance.",
+  "results": [
+    {
+      "name": "invert",
+      "stockSavedSha256": "29fb338694a850aa6e0c41e294d0d35c5253450e4d4357b5280426476a680573",
+      "stockSavedBytes": 1406,
+      "version": 20,
+      "graph": "invert-linear",
+      "actualEffect": {
+        "offset": 945,
+        "label": "Disclosed graph bootstrap",
+        "icon": "",
+        "operation": "gegl:gegl",
+        "version": null,
+        "arguments": [
+          {
+            "name": "string",
+            "type": 4,
+            "value": "invert-linear",
+            "propertyOffset": 1078
+          },
+          {
+            "name": "error",
+            "type": 4,
+            "value": "",
+            "propertyOffset": 1119
+          }
+        ],
+        "maskOffset": 1162,
+        "recordSha256": "06f3528dfefb742d6e7d7108e1b92a0fbbaa74db0a393ebb716a329cad9c13e8",
+        "properties": [
+          {
+            "kind": 8,
+            "offset": 994,
+            "rawHex": "00000001"
+          },
+          {
+            "kind": 33,
+            "offset": 1006,
+            "rawHex": "3f800000"
+          },
+          {
+            "kind": 7,
+            "offset": 1018,
+            "rawHex": "0000001c"
+          },
+          {
+            "kind": 37,
+            "offset": 1030,
+            "rawHex": "00000000"
+          },
+          {
+            "kind": 36,
+            "offset": 1042,
+            "rawHex": "fffffffe"
+          },
+          {
+            "kind": 35,
+            "offset": 1054,
+            "rawHex": "ffffffff"
+          },
+          {
+            "kind": 44,
+            "offset": 1066,
+            "rawHex": "00000001"
+          }
+        ]
+      },
+      "ownerPixelsUnchangedFromOriginal": true,
+      "mask": {
+        "offset": 1162,
+        "name": "Original full coverage",
+        "size": [
+          8,
+          6
+        ],
+        "allSamples": 255
+      },
+      "changedPreviewPixels": 48,
+      "baselinePixel0": [
+        17,
+        13,
+        29,
+        64
+      ],
+      "actualPixel0": [
+        199,
+        199,
+        199,
+        112
+      ],
+      "previewSha256": "49d4f91b4703fe789f4eac56c6dac1af591cb4ee044154645d8fdc789d3d5425",
+      "corpusBasename": "historical-2-99-18-graph-invert-linear",
+      "observedReopenedRgba8": [
+        [
+          199,
+          199,
+          199,
+          112
+        ],
+        [
+          209,
+          209,
+          209,
+          175
+        ],
+        [
+          219,
+          221,
+          220,
+          220
+        ],
+        [
+          229,
+          236,
+          233,
+          246
+        ],
+        [
+          196,
+          199,
+          198,
+          112
+        ],
+        [
+          200,
+          209,
+          206,
+          175
+        ],
+        [
+          200,
+          221,
+          215,
+          220
+        ],
+        [
+          194,
+          236,
+          224,
+          246
+        ],
+        [
+          209,
+          208,
+          208,
+          175
+        ],
+        [
+          220,
+          220,
+          219,
+          220
+        ],
+        [
+          232,
+          234,
+          231,
+          246
+        ],
+        [
+          197,
+          198,
+          197,
+          112
+        ],
+        [
+          203,
+          208,
+          205,
+          175
+        ],
+        [
+          207,
+          220,
+          213,
+          220
+        ],
+        [
+          206,
+          234,
+          222,
+          246
+        ],
+        [
+          189,
+          198,
+          194,
+          112
+        ],
+        [
+          221,
+          216,
+          218,
+          220
+        ],
+        [
+          235,
+          228,
+          230,
+          246
+        ],
+        [
+          198,
+          197,
+          197,
+          112
+        ],
+        [
+          206,
+          206,
+          204,
+          175
+        ],
+        [
+          212,
+          216,
+          212,
+          220
+        ],
+        [
+          216,
+          228,
+          219,
+          246
+        ],
+        [
+          192,
+          197,
+          194,
+          112
+        ],
+        [
+          190,
+          206,
+          198,
+          175
+        ],
+        [
+          236,
+          219,
+          229,
+          246
+        ],
+        [
+          199,
+          195,
+          196,
+          112
+        ],
+        [
+          207,
+          201,
+          203,
+          175
+        ],
+        [
+          216,
+          209,
+          210,
+          220
+        ],
+        [
+          223,
+          219,
+          217,
+          246
+        ],
+        [
+          194,
+          195,
+          193,
+          112
+        ],
+        [
+          195,
+          201,
+          196,
+          175
+        ],
+        [
+          192,
+          209,
+          197,
+          220
+        ],
+        [
+          199,
+          191,
+          196,
+          112
+        ],
+        [
+          209,
+          194,
+          202,
+          175
+        ],
+        [
+          219,
+          198,
+          208,
+          220
+        ],
+        [
+          229,
+          203,
+          214,
+          246
+        ],
+        [
+          196,
+          191,
+          192,
+          112
+        ],
+        [
+          200,
+          194,
+          194,
+          175
+        ],
+        [
+          200,
+          198,
+          194,
+          220
+        ],
+        [
+          194,
+          203,
+          191,
+          246
+        ],
+        [
+          209,
+          184,
+          201,
+          175
+        ],
+        [
+          220,
+          182,
+          206,
+          220
+        ],
+        [
+          232,
+          180,
+          210,
+          246
+        ],
+        [
+          197,
+          186,
+          191,
+          112
+        ],
+        [
+          203,
+          184,
+          193,
+          175
+        ],
+        [
+          207,
+          182,
+          191,
+          220
+        ],
+        [
+          206,
+          180,
+          186,
+          246
+        ],
+        [
+          189,
+          186,
+          185,
+          112
+        ]
+      ],
+      "corpusFiles": [
+        {
+          "path": "gimp/historical-2-99-18-graph-invert-linear.xcf",
+          "bytes": 1406,
+          "sha256": "29fb338694a850aa6e0c41e294d0d35c5253450e4d4357b5280426476a680573"
+        },
+        {
+          "path": "gimp/historical-2-99-18-graph-invert-linear.png",
+          "bytes": 228,
+          "sha256": "5538fdc2b92aa2d10334b4a5983955db27551a3dfe6e103f3d31bc24fbabaffb"
+        }
+      ]
+    },
+    {
+      "name": "over",
+      "stockSavedSha256": "32ee3c620d72be70ab3d7473b577df08a05bd4a5b5ba7897ef017895da67939c",
+      "stockSavedBytes": 1434,
+      "version": 20,
+      "graph": "id=foo over aux=[ ref=foo invert-linear ]",
+      "actualEffect": {
+        "offset": 945,
+        "label": "Disclosed graph bootstrap",
+        "icon": "",
+        "operation": "gegl:gegl",
+        "version": null,
+        "arguments": [
+          {
+            "name": "string",
+            "type": 4,
+            "value": "id=foo over aux=[ ref=foo invert-linear ]",
+            "propertyOffset": 1078
+          },
+          {
+            "name": "error",
+            "type": 4,
+            "value": "",
+            "propertyOffset": 1147
+          }
+        ],
+        "maskOffset": 1190,
+        "recordSha256": "dae708897188fa1320687167673a0616f74c40860ec904aea1a05e78b1bbc8e9",
+        "properties": [
+          {
+            "kind": 8,
+            "offset": 994,
+            "rawHex": "00000001"
+          },
+          {
+            "kind": 33,
+            "offset": 1006,
+            "rawHex": "3f800000"
+          },
+          {
+            "kind": 7,
+            "offset": 1018,
+            "rawHex": "0000001c"
+          },
+          {
+            "kind": 37,
+            "offset": 1030,
+            "rawHex": "00000000"
+          },
+          {
+            "kind": 36,
+            "offset": 1042,
+            "rawHex": "fffffffe"
+          },
+          {
+            "kind": 35,
+            "offset": 1054,
+            "rawHex": "ffffffff"
+          },
+          {
+            "kind": 44,
+            "offset": 1066,
+            "rawHex": "00000001"
+          }
+        ]
+      },
+      "ownerPixelsUnchangedFromOriginal": true,
+      "mask": {
+        "offset": 1190,
+        "name": "Original full coverage",
+        "size": [
+          8,
+          6
+        ],
+        "allSamples": 255
+      },
+      "changedPreviewPixels": 48,
+      "baselinePixel0": [
+        17,
+        13,
+        29,
+        64
+      ],
+      "actualPixel0": [
+        176,
+        176,
+        176,
+        148
+      ],
+      "previewSha256": "53a9a4987f84d55dda488fc806aceb21a276a620ebcfb26b45399342451f5684",
+      "corpusBasename": "historical-2-99-18-graph-original-over-inverted",
+      "observedReopenedRgba8": [
+        [
+          176,
+          176,
+          176,
+          148
+        ],
+        [
+          193,
+          193,
+          193,
+          210
+        ],
+        [
+          210,
+          212,
+          211,
+          242
+        ],
+        [
+          226,
+          233,
+          230,
+          253
+        ],
+        [
+          179,
+          176,
+          177,
+          148
+        ],
+        [
+          190,
+          193,
+          192,
+          210
+        ],
+        [
+          197,
+          212,
+          207,
+          242
+        ],
+        [
+          193,
+          233,
+          222,
+          253
+        ],
+        [
+          193,
+          193,
+          193,
+          210
+        ],
+        [
+          211,
+          211,
+          210,
+          242
+        ],
+        [
+          230,
+          231,
+          229,
+          253
+        ],
+        [
+          178,
+          177,
+          178,
+          148
+        ],
+        [
+          191,
+          193,
+          192,
+          210
+        ],
+        [
+          201,
+          211,
+          206,
+          242
+        ],
+        [
+          205,
+          231,
+          220,
+          253
+        ],
+        [
+          186,
+          177,
+          181,
+          148
+        ],
+        [
+          212,
+          208,
+          210,
+          242
+        ],
+        [
+          232,
+          226,
+          227,
+          253
+        ],
+        [
+          177,
+          178,
+          178,
+          148
+        ],
+        [
+          192,
+          192,
+          192,
+          210
+        ],
+        [
+          205,
+          208,
+          205,
+          242
+        ],
+        [
+          214,
+          226,
+          217,
+          253
+        ],
+        [
+          184,
+          178,
+          181,
+          148
+        ],
+        [
+          188,
+          192,
+          190,
+          210
+        ],
+        [
+          233,
+          217,
+          226,
+          253
+        ],
+        [
+          176,
+          181,
+          179,
+          148
+        ],
+        [
+          192,
+          191,
+          191,
+          210
+        ],
+        [
+          208,
+          203,
+          204,
+          242
+        ],
+        [
+          221,
+          217,
+          215,
+          253
+        ],
+        [
+          181,
+          181,
+          182,
+          148
+        ],
+        [
+          189,
+          191,
+          190,
+          210
+        ],
+        [
+          190,
+          203,
+          195,
+          242
+        ],
+        [
+          176,
+          184,
+          179,
+          148
+        ],
+        [
+          193,
+          189,
+          191,
+          210
+        ],
+        [
+          210,
+          195,
+          202,
+          242
+        ],
+        [
+          226,
+          202,
+          212,
+          253
+        ],
+        [
+          179,
+          184,
+          183,
+          148
+        ],
+        [
+          190,
+          189,
+          189,
+          210
+        ],
+        [
+          197,
+          195,
+          192,
+          242
+        ],
+        [
+          193,
+          202,
+          191,
+          253
+        ],
+        [
+          193,
+          187,
+          191,
+          210
+        ],
+        [
+          211,
+          184,
+          201,
+          242
+        ],
+        [
+          230,
+          180,
+          209,
+          253
+        ],
+        [
+          178,
+          189,
+          184,
+          148
+        ],
+        [
+          191,
+          187,
+          189,
+          210
+        ],
+        [
+          201,
+          184,
+          190,
+          242
+        ],
+        [
+          205,
+          180,
+          186,
+          253
+        ],
+        [
+          186,
+          189,
+          189,
+          148
+        ]
+      ],
+      "corpusFiles": [
+        {
+          "path": "gimp/historical-2-99-18-graph-original-over-inverted.xcf",
+          "bytes": 1434,
+          "sha256": "32ee3c620d72be70ab3d7473b577df08a05bd4a5b5ba7897ef017895da67939c"
+        },
+        {
+          "path": "gimp/historical-2-99-18-graph-original-over-inverted.png",
+          "bytes": 240,
+          "sha256": "93bbac9749a325c4540b7b04b1b3f5bb807cc66a5f837397e1d2242796f85ca6"
+        }
+      ]
+    }
+  ],
+  "authoringVersion": "Stock GIMP2.99.18 Windows x64; actual process exit0",
+  "officialInstallerUrl": "https://download.gimp.org/gimp/v2.99/windows/gimp-2.99.18-setup.exe",
+  "officialInstallerSha256": "2a09a05407a0dbf160f96a1ebb6455e6ffbe920bfb4c62adbb1cd83b116b7e1c",
+  "commands": [
+    "python3 tools/gimp-xcf/historical_2_99_18_graph_seed.py WORK_DIRECTORY",
+    "GIMP3_DIRECTORY=ISOLATED_ABSOLUTE_PROFILE gimp-console-2.99 --new-instance --no-interface --no-splash --no-data --batch-interpreter=plug-in-script-fu-eval --batch='(begin (load \"tools/gimp-xcf/historical_2_99_18_graph.scm\") (historical-2-99-18-graphs \"WORK_DIRECTORY\" \"gimp\"))' --quit",
+    "python3 -c \"import sys;sys.path.insert(0,'tools/gimp-xcf');from historical_png_metadata import sanitize;from pathlib import Path;[sanitize(Path('gimp')/('historical-2-99-18-graph-'+name+'.png')) for name in ['invert-linear','original-over-inverted']]\""
+  ],
+  "sourceDeclarations": [
+    "https://raw.githubusercontent.com/GNOME/gimp/GIMP_2_99_18/app/xcf/xcf-private.h#L103-L111",
+    "https://raw.githubusercontent.com/GNOME/gimp/GIMP_2_99_18/app/xcf/xcf-save.c#L833-L929",
+    "https://raw.githubusercontent.com/GNOME/gimp/GIMP_2_99_18/app/xcf/xcf-save.c#L2005-L2057",
+    "https://raw.githubusercontent.com/GNOME/gimp/GIMP_2_99_18/app/xcf/xcf-load.c#L3218-L3263"
+  ],
+  "originalPixelFormula": {
+    "R": "(x*23+17)%256",
+    "G": "(y*37+13)%256",
+    "B": "(x*11+y*19+29)%256",
+    "A": "64+((x+y)%4)*48"
+  },
+  "commonSourceFacts": {
+    "canvas": [
+      8,
+      6
+    ],
+    "ownerSize": [
+      8,
+      6
+    ],
+    "ownerOffset": [
+      0,
+      0
+    ],
+    "ownerCount": 1,
+    "unaffectedSibling": false,
+    "mode": "RGB",
+    "precision": 150,
+    "alpha": true,
+    "embeddedIccProfile": false,
+    "ownerOpacity": 1,
+    "ownerVisible": true,
+    "effectOpacity": 1,
+    "effectVisible": true,
+    "effectPaintMode": 28,
+    "effectBlendSpace": 0,
+    "effectCompositeSpace": -2,
+    "effectCompositeMode": -1,
+    "effectRegion": 1,
+    "maskSize": [
+      8,
+      6
+    ],
+    "maskSamples": "all255",
+    "fontResources": false
+  },
+  "pngPostprocess": "Remove ancillary metadata/profile chunks only; retain IHDR/IDAT/IEND and their original CRCs/pixel bytes. Each PNG is8x6RGBA8."
+}

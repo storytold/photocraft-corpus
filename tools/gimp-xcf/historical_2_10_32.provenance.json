@@ -1,0 +1,138 @@
+{
+  "sourceApplication": "GIMP2.10.32 official Windows stock console, actual x86PE(0x14c)",
+  "officialInstallerUrl": "https://download.gimp.org/gimp/v2.10/windows/gimp-2.10.32-setup-1.exe",
+  "officialInstallerSha256": "e4410b5695cfc83bc2a33a124e8689a50c942978d0164e77724407d2a5cefb0d",
+  "officialChecksumUrl": "https://download.gimp.org/gimp/v2.10/windows/SHA256SUMS",
+  "consoleExeSha256": "752a27350925e7ef9dee3e8789b9c7e8cfd991b43bbb4034bcedc0b9bfa68eb8",
+  "binaryVerification": "Existing console exactly matches the console entry freshly extracted from the hash-verified official installer; installer not executed. Actual --version and public PDB report2.10.32.",
+  "environment": "New absolute GIMP2_DIRECTORY profile; existing runtime reused without modification. No GUI, font asset, profile asset, development gate or synthetic XCF input.",
+  "runtimeWarnings": "Optional x86_64-v2/v3 GEGL extension modules were rejected by the actual x86process, and an unrelated child executable was missing. Mandatory ordinary text/path save/delete/reopen/PNG export succeeded with explicit success marker and recorded readback. No claim that every optional installed operation works.",
+  "generationCommand": "GIMP2_DIRECTORY=ISOLATED_ABSOLUTE_PROFILE gimp-console-2.10 --new-instance --no-interface --no-splash --no-data --batch-interpreter=plug-in-script-fu-eval --batch='(begin (load \"tools/gimp-xcf/historical_2_10_32.scm\") (historical-2-10-32-author \"gimp\" \"tools/gimp-xcf/historical_2_10_32.source-facts.scm\"))' --batch='(gimp-quit 0)'",
+  "postprocessCommand": "python3 -c \"import sys;sys.path.insert(0,'tools/gimp-xcf');from historical_png_metadata import sanitize;from pathlib import Path;sanitize(Path('gimp/historical-2-10-32-legacy-text-path.png'))\"",
+  "verification": "Ordinary source save, delete original image, load saved bytes in same stock2.10.32, query editable text/font/size/color/offset and exact path controls, export document-canvas preview. Inspect logs/success marker as well as exit code: historical GIMP gimp-quit can mask a preceding batch error.",
+  "sourceFacts": {
+    "version": 0,
+    "header": "gimp xcf file",
+    "canvas": [
+      64,
+      32
+    ],
+    "mode": "RGB",
+    "precisionFieldPresent": false,
+    "queriedPrecision": 150,
+    "embeddedIccProfile": false,
+    "layerSize": [
+      68,
+      16
+    ],
+    "layerKind": 1,
+    "layerName": "Legacy XCF",
+    "offset": [
+      0,
+      0
+    ],
+    "text": {
+      "value": "Legacy XCF",
+      "fontString": "Sans-serif",
+      "fontSize": 12,
+      "unit": "pixels",
+      "colorRgb": [
+        0,
+        0,
+        0
+      ],
+      "storedTextParasite": "(text \"Legacy XCF\")\n(font \"Sans-serif\")\n(font-size 12)\n(font-size-unit pixels)\n(antialias yes)\n(language \"C\")\n(base-direction ltr)\n(color (color-rgb 0 0 0))\n(justify left)\n(box-mode dynamic)\n(box-unit pixels)\n(hinting yes)\n"
+    },
+    "path": {
+      "imageProperty": 23,
+      "payloadBytes": 132,
+      "active": 0,
+      "name": "Original legacy Bezier",
+      "linked": 0,
+      "state": 4,
+      "closed": true,
+      "recordVersion": 3,
+      "versionFields": [
+        1,
+        3
+      ],
+      "storedPoints": [
+        [
+          1,
+          4.0,
+          4.0
+        ],
+        [
+          2,
+          8.0,
+          2.0
+        ],
+        [
+          2,
+          40.0,
+          24.0
+        ],
+        [
+          1,
+          44.0,
+          24.0
+        ],
+        [
+          2,
+          48.0,
+          28.0
+        ],
+        [
+          2,
+          2.0,
+          4.0
+        ]
+      ],
+      "publicReadbackCACCAC": [
+        2,
+        4,
+        4,
+        4,
+        8,
+        2,
+        40,
+        24,
+        44,
+        24,
+        48,
+        28
+      ]
+    },
+    "resolutionDpi": [
+      300.0,
+      300.0
+    ]
+  },
+  "png": {
+    "dimensions": [
+      64,
+      32
+    ],
+    "bitDepth": 8,
+    "colorType": 6,
+    "chunks": [
+      "IHDR",
+      "IDAT",
+      "IEND"
+    ],
+    "policy": "Reopened document canvas preview; path unstroked. Wider text is canvas-clipped. Ancillary metadata/profile chunks removed; critical pixel chunks unchanged."
+  },
+  "scope": "Actual historical stock producer old string-font and PROP_PATHS record evidence; not GDynText or all PATHS record versions, and not GIMP compositing emulation.",
+  "assets": [
+    {
+      "path": "gimp/historical-2-10-32-legacy-text-path.xcf",
+      "bytes": 1947,
+      "sha256": "5521681dc818c95de8dade800812a57306a680ebc661e3179521221f64953626"
+    },
+    {
+      "path": "gimp/historical-2-10-32-legacy-text-path.png",
+      "bytes": 696,
+      "sha256": "8911726349bf61444304bbbf85518486b95f58b21ccb4d534a0ea5bcf3a43347"
+    }
+  ]
+}
