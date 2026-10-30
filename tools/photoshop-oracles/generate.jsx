@@ -996,6 +996,27 @@ function adjBase(name, mode, bits) {
     return doc;
 }
 
+// ---------------------------------------------------------------------------------------------
+// Document-level data
+// ---------------------------------------------------------------------------------------------
+
+/// Color Sampler points on pixels (10, 20), (150, 100) and (299, 199) of a 300×200 document, at
+/// 8 and 16 bits: image resources 1073 and the legacy 1038.
+function documentCases() {
+    var points = [[10, 20], [150, 100], [299, 199]];
+    var bits = [8, 16];
+    for (var i = 0; i < bits.length; i++) {
+        (function (b) {
+            run("document/color-samplers-" + b + "bit.psd", function () {
+                var doc = newDoc("color-samplers", 300, 200);
+                if (b !== 8) doc.bitsPerChannel = BITS[b];
+                for (var j = 0; j < points.length; j++) doc.colorSamplers.add([px(points[j][0]), px(points[j][1])]);
+                return doc;
+            });
+        })(bits[i]);
+    }
+}
+
 function adjustmentCases() {
     var combos = [["rgb", 8], ["rgb", 16], ["rgb", 32], ["gray", 8], ["gray", 16], ["gray", 32], ["cmyk", 8], ["cmyk", 16], ["lab", 8], ["lab", 16]];
     for (var c = 0; c < combos.length; c++) {
@@ -1079,6 +1100,7 @@ try {
     effectCases();
     textCases();
     adjustmentCases();
+    documentCases();
 } finally {
     app.preferences.rulerUnits = savedPrefs.ruler;
     app.preferences.typeUnits = savedPrefs.type;

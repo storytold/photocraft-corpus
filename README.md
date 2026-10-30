@@ -118,7 +118,7 @@ There is one top-level folder per source, i.e. per application that authored the
 
 | Folder | Source | Files |
 |---|---|---:|
-| [`photoshop/`](#photoshop-photoshop-oracle-psds) | Adobe Photoshop 2026 (27.10), driven by [`tools/photoshop-oracles/`](tools/photoshop-oracles) | 258 |
+| [`photoshop/`](#photoshop-photoshop-oracle-psds) | Adobe Photoshop 2026 (27.10), driven by [`tools/photoshop-oracles/`](tools/photoshop-oracles) | 260 |
 | [`gimp/`](#gimp-gimp-xcf-oracles) | GIMP 3.2.6, driven by [`tools/gimp-xcf/`](tools/gimp-xcf) | 28 |
 
 The repository also contains:
@@ -203,8 +203,9 @@ history** (no force-push, no history rewrite).
 
 ## `photoshop/`: Photoshop oracle PSDs
 
-256 small PSDs created from scratch with **Adobe Photoshop 2026 (27.10.0) on macOS** by the
-ExtendScript generator in [`tools/photoshop-oracles/`](tools/photoshop-oracles). Each file is
+260 small PSDs created from scratch with **Adobe Photoshop 2026 (27.10.0) on macOS** (`document/`
+with 27.11 on Windows) by the ExtendScript generator in
+[`tools/photoshop-oracles/`](tools/photoshop-oracles). Each file is
 saved with **Maximize Compatibility** turned on, so its merged composite is Photoshop's own
 rendering of the layer stack. PhotoCraft compares its import and re-render against that composite.
 
@@ -214,6 +215,7 @@ rendering of the layer stack. PhotoCraft compares its import and re-render again
 | `effects/` | 37 | Bevel & Emboss in every style (outer, inner, emboss, pillow, stroke emboss) × technique (smooth, chisel hard, chisel soft); direction, soften, angle/altitude/depth; contours and gloss contours (with and without anti-aliasing, ranges); stroke emboss with inside/center strokes; Satin; outer glow (soft, precise + spread, contour, gradient); inner glow (edge, center + choke, contour); a combination |
 | `text/` | 54 | Point and paragraph type: style runs (sizes, colours, fonts), tracking, kerning (metrics / optical / off), manual leading, baseline shift, faux bold/italic, all caps, small caps (faux and OpenType), super/subscript, point alignment, paragraph alignment and all four justifications, hyphenation on/off, indents and space before/after, horizontal/vertical scale, underline/strikethrough, vertical Latin (rotated/upright) and CJK text, a vertical paragraph, five warps, text on a closed and an open path, OpenType ligatures (on/off), discretionary ligatures, fractions, old-style figures, ordinals, the five anti-alias modes, type with layer styles and with a blend mode |
 | `adjustments/<mode><bits>/` | 135 | Adjustment layers in RGB 8/16/32, Grayscale 8/16/32, CMYK 8/16 and Lab 8/16: Levels, Curves (composite and per channel), Brightness/Contrast (modern and legacy), Exposure, Vibrance, Hue/Saturation (and Colorize), Color Balance, Black & White with tint, Photo Filter, Channel Mixer, Gradient Map, Selective Color, Invert, Posterize, Threshold, where Photoshop offers them in that mode and depth. Each directory has `baseline-layer-copy.psd` with no adjustment, which tests mode/depth decoding on its own. `rgb8/` adds a masked adjustment with opacity, a clipped adjustment with a blend mode, and a stack |
+| `document/` | 2 | Document-level image resources: Color Sampler points (resources 1073 and legacy 1038) on known pixels, at 8 and 16 bits |
 
 File names give the feature and its parameters (`bevel-inner-chisel-soft`,
 `sf-unsharp-mask-300-r5-t8`). When Photoshop doesn't offer an adjustment in a mode or depth
