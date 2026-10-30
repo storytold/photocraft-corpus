@@ -5,16 +5,26 @@
 // with Maximize Compatibility on, so its merged composite is Photoshop's own rendering of the
 // layer stack: the oracle PhotoCraft's corpus tests compare its flatten with.
 //
-// Run:  tools/photoshop-oracles/generate.sh [filter-regex]
+// Run:  tools/photoshop-oracles/generate.sh [filter-regex]    (macOS)
 // (or:  tools/photoshop-oracles/run-jsx.sh tools/photoshop-oracles/generate.jsx <out-dir> [filter-regex])
+// or in Photoshop: File › Scripts › Browse… → this file (asks for the filter; writes photoshop/).
 //
 // Clean-room: this script only drives Photoshop's public scripting API and keeps its output.
 // Contours and gradients below are our own point lists, not Photoshop presets.
 
 #target photoshop
 
-var OUT = (typeof arguments !== "undefined" && arguments.length > 0) ? arguments[0] : "~/Desktop/photoshop-oracles";
-var FILTER = (typeof arguments !== "undefined" && arguments.length > 1 && arguments[1]) ? new RegExp(arguments[1]) : null;
+// With arguments (generate.sh): the output directory and an optional filter.
+// Without (File › Scripts › Browse… in Photoshop): this repository's photoshop/ folder next to
+// the script, and a prompt for the filter; cancelling it generates nothing.
+var HAS_ARGS = typeof arguments !== "undefined" && arguments.length > 0;
+var SCRIPT_FILE = (function () {
+    try { return $.fileName ? new File($.fileName) : null; } catch (e) { return null; }
+})();
+var OUT = HAS_ARGS ? arguments[0] : (SCRIPT_FILE ? SCRIPT_FILE.parent.parent.parent.fsName + "/photoshop" : "~/Desktop/photoshop-oracles");
+var FILTER_SOURCE = HAS_ARGS ? (arguments.length > 1 ? arguments[1] : "") : prompt("Generate which files? A regular expression on the path, e.g. ^document/ (empty for all):", "^document/");
+var CANCELLED = FILTER_SOURCE === null;
+var FILTER = FILTER_SOURCE ? new RegExp(FILTER_SOURCE) : null;
 
 function cTID(s) { return charIDToTypeID(s); }
 function sTID(s) { return stringIDToTypeID(s); }
@@ -192,7 +202,7 @@ function save(doc, rel) {
 
 /// Run one case: `fn(doc?)` builds and returns the document; it is saved as `rel` and closed.
 function run(rel, fn) {
-    if (FILTER && !FILTER.test(rel)) return;
+    if (CANCELLED || (FILTER && !FILTER.test(rel))) return;
     var doc = null;
     try {
         doc = fn();
@@ -996,6 +1006,27 @@ function adjBase(name, mode, bits) {
     return doc;
 }
 
+// ---------------------------------------------------------------------------------------------
+// Document-level data
+// ---------------------------------------------------------------------------------------------
+
+/// Color Sampler points on pixels (10, 20), (150, 100) and (299, 199) of a 300×200 document, at
+/// 8 and 16 bits: image resources 1073 and the legacy 1038.
+function documentCases() {
+    var points = [[10, 20], [150, 100], [299, 199]];
+    var bits = [8, 16];
+    for (var i = 0; i < bits.length; i++) {
+        (function (b) {
+            run("document/color-samplers-" + b + "bit.psd", function () {
+                var doc = newDoc("color-samplers", 300, 200);
+                if (b !== 8) doc.bitsPerChannel = BITS[b];
+                for (var j = 0; j < points.length; j++) doc.colorSamplers.add([px(points[j][0]), px(points[j][1])]);
+                return doc;
+            });
+        })(bits[i]);
+    }
+}
+
 function adjustmentCases() {
     var combos = [["rgb", 8], ["rgb", 16], ["rgb", 32], ["gray", 8], ["gray", 16], ["gray", 32], ["cmyk", 8], ["cmyk", 16], ["lab", 8], ["lab", 16]];
     for (var c = 0; c < combos.length; c++) {
@@ -1079,10 +1110,13 @@ try {
     effectCases();
     textCases();
     adjustmentCases();
+    documentCases();
 } finally {
     app.preferences.rulerUnits = savedPrefs.ruler;
     app.preferences.typeUnits = savedPrefs.type;
     app.preferences.maximizeCompatibility = savedPrefs.compat;
     app.displayDialogs = savedPrefs.dialogs;
 }
+// Run from Photoshop's menu, nothing prints the result: show it.
+if (!HAS_ARGS && !CANCELLED) alert(RESULTS.length ? RESULTS.join("\n") : "No case matched " + FILTER_SOURCE);
 RESULTS.join("\n");
