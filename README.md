@@ -226,9 +226,6 @@ every embedded smart object to 1 MiB with zeros, and that padding compresses awa
 
 ### How it was generated
 
-- On Windows (or any platform), Photoshop's File › Scripts › Browse… runs `generate.jsx` directly:
-  without arguments it writes into this repository's `photoshop/` folder next to the script, asks
-  for the filter (a regular expression on the path, such as `^document/`) and shows the results.
 - `tools/photoshop-oracles/run-jsx.sh` runs an ExtendScript file in the installed Photoshop
   through AppleScript `do javascript`, addressing Photoshop by bundle id
   (`com.adobe.Photoshop`), so any installed version works. On Photoshop 27.10,
