@@ -337,7 +337,8 @@ match PhotoCraft's composite closely; the default ones measure the known gap bet
 [`tools/jxl-fixtures/`](tools/jxl-fixtures), plus the source JPEG two of them were made from: 13
 files, 7 KB. PhotoCraft's JPEG XL decoder checks lossless files sample for sample against the
 procedural formulas the generator drew with, lossy ones by PSNR, and the metadata, orientation,
-JPEG reconstruction and animation cases against what was encoded.
+JPEG reconstruction and animation cases against what was encoded. [`jxl/README.md`](jxl/README.md)
+has the per-file feature matrix, the exact `cjxl` flags, and the size and SHA-256 of every file.
 
 | File | What it exercises |
 |---|---|
