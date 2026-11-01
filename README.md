@@ -292,7 +292,7 @@ then follow the [pinning workflow](#pinning-workflow).
 
 ## `gimp/`: GIMP XCF oracles
 
-51 small XCF files written by **GIMP 3.2.6** and the documented historical releases,
+51 small XCF files written by **GIMP 3.2.6** and the documented historical producers,
 each saved next to the author's merged preview as a PNG, plus one original linked-resource PNG
 and three compressed wrappers: **106 files**. The modern Python generator and historical
 ScriptFu generators live in [`tools/gimp-xcf/`](tools/gimp-xcf). Adjacent provenance records
@@ -371,6 +371,77 @@ match PhotoCraft's composite closely; the default ones measure the known gap bet
   the PNGs). Only the assigned-profile batch embeds profiles, all generated from original numeric data in the script; the baseline float file is linear light by its precision.
 - GIMP stamps a modification time into the PNGs, so regenerated files differ byte for byte.
   Regenerate only when the set itself changes, then follow the [pinning workflow](#pinning-workflow).
+
+### Authorship, privacy and preview provenance
+
+The expanded native-import batch contains 40 original XCFs created for this contribution by
+the contributing author using the committed generators, not downloaded sample images or
+personal documents. Its producers are GIMP **3.2.6**, **2.10.32**, **2.99.18**, **2.9.6** and
+the unmodified **2.9.5 development commit `0874703e3b7f2d211816feccd745404ed8ec3d71`**.
+The 2.9.x and 2.99.x producers are historical development versions, not stable releases.
+Per-batch generators and adjacent provenance records identify the producer and reproduction
+steps. The two historical graph cases start with our own handcrafted bootstrap seeds, then
+undergo the documented GIMP rewrite/reopen procedure; they are not ordinary GUI-authored graphs.
+These original assets use this repository's **MIT OR Apache-2.0** license.
+
+The fixtures contain no personal images, personal names, email addresses or private filesystem
+paths. Layer/path names, text and intentional comment/Exif/XMP fields are original test literals;
+resolution and units are synthetic settings. The relative link names only the generated
+`link-source.png`. GIMP-generated timestamps and thumbnails describe these procedural images.
+No font files or third-party image/profile assets are included. The assigned profiles are
+generated from original numeric data. Review the generators and recorded stock-reopen metadata
+alongside scans of fixture bytes, decompressed wrappers and compressed PNG metadata: a marker
+scan alone cannot establish provenance or the absence of all personal data.
+
+Each XCF's same-stem PNG is exported by **GIMP**, using its own visible-layer rendering.
+The modern generator duplicates and merges the authored image before PNG export; the historical
+helpers export the reopened source, including a materialized preview copy for graph cases.
+Historical/named-color PNG metadata removal preserves pixel-defining chunks unchanged.
+The extra `link-source.png` is an original generated resource. HDR previews can clip values;
+stored precision must be checked against procedural samples.
+
+### Expanded-batch size and integrity
+
+At corpus commit `1d8ecfee8a3a139c79e643cfabca8eba511d96f7`, compared with base
+`c3abfc1c794409a71ade6a22283caab4ba4d2aa8`, the batch adds **84 fixture files totaling
+703,530 bytes**: 40 XCFs, 41 PNGs and three compressed wrappers. All new files including
+generators/provenance total **897,896 bytes**; edits to existing text bring the net tracked
+content increase to **948,034 bytes**. These are raw file sizes, not Git transfer sizes.
+
+The audit recomputed all **370** committed asset hashes and matched their working-copy bytes
+against `SHA256SUMS`; all **286** baseline entries are unchanged. All three wrappers decompress
+exactly to their source XCF. All new XCF/PNG dimensions agree, with a maximum dimension of
+**300 px**. The private user/path marker scan found no matches. These figures describe that
+immutable snapshot; later documentation edits do not change the fixture byte total.
+To independently verify the current assets, run from the repository root:
+
+```sh
+sha256sum -c SHA256SUMS
+```
+
+### Consumer comparison policies
+
+The following limits describe PhotoCraft commit
+[`a3a2cc57a`](https://github.com/Terra854/photocraft/commit/a3a2cc57ade2f192abbf9b29d8c09173c998e78f).
+They are consumer assertions, not a universal tolerance attached to these source files.
+
+| Comparison | Assertion |
+|---|---|
+| Expanded source evidence | PNG canvas dimensions match; precision and historical witnesses compare expected converted F32 bits exactly. Other numeric fields declare individual limits, e.g. original ICC matrix values within `1/65536` and named markup colors within `0.00001`. |
+| Independent native counterparts | Raster data and structure compare exactly, mask coverage within `1/255`, native CPU composites within `2/255` per RGBA channel. Native PSD/PNG export/reopen composites use `2.5/255`. |
+| Existing perceptual GIMP previews | Premultiplied RGBA difference within `2.5/255`; group and legacy-mode cases respectively allow 16% and 40% of pixels over that limit for documented semantic differences. Layers and masks allow none over. |
+| Existing gray/indexed/channel GIMP previews | Premultiplied RGBA difference within `2/255`, no pixels over. |
+| Existing default linear-light layers/groups/mask previews | Respectively `40/255`, `140/255` and `60/255`, no pixels over, tracking the known source/native rendering difference. |
+| Existing opaque equivalent legacy-mode cells | RGB difference within `2.5/255`; other mode/alpha outcomes are reported as qualified differences. |
+
+The exact assertions live in
+[`xcf_source_evidence.rs`](https://github.com/Terra854/photocraft/blob/a3a2cc57ade2f192abbf9b29d8c09173c998e78f/crates/io/tests/it/xcf_source_evidence.rs),
+[`xcf_historical_records.rs`](https://github.com/Terra854/photocraft/blob/a3a2cc57ade2f192abbf9b29d8c09173c998e78f/crates/io/tests/it/xcf_historical_records.rs),
+[`xcf_native_import.rs`](https://github.com/Terra854/photocraft/blob/a3a2cc57ade2f192abbf9b29d8c09173c998e78f/crates/io/tests/it/xcf_native_import.rs)
+and [`xcf.rs`](https://github.com/Terra854/photocraft/blob/a3a2cc57ade2f192abbf9b29d8c09173c998e78f/crates/io/tests/it/xcf.rs).
+Expanded fixtures use PNGs as source previews and independent native expectations for editing
+and compositing. No blanket GIMP-PNG equivalence is required. Publication and a consumer pin
+update are still required before the expanded source tests run in ordinary upstream corpus CI.
 
 ### Historical GIMP 2.99.18 text and vector storage
 
