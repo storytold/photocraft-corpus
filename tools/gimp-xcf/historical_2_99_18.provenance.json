@@ -1,0 +1,187 @@
+{
+  "authoringApplication": "GIMP2.99.18, official unmodified x64 Windows runtime",
+  "officialInstaller": "https://download.gimp.org/gimp/v2.99/windows/gimp-2.99.18-setup.exe",
+  "installerSha256": "2a09a05407a0dbf160f96a1ebb6455e6ffbe920bfb4c62adbb1cd83b116b7e1c",
+  "generationCommand": "gimp-console-2.99 --new-instance --no-interface --no-splash --no-data --batch-interpreter=plug-in-script-fu-eval --batch='(begin (load \"tools/gimp-xcf/historical_2_99_18.scm\") (historical-2-99-18-generate \"gimp\" \"tools/gimp-xcf/historical_2_99_18.source-facts.scm\"))' --quit",
+  "postprocessCommand": "python3 tools/gimp-xcf/historical_png_metadata.py gimp",
+  "environment": "Separate absolute GIMP3_DIRECTORY; ordinary stock ScriptFu and PNG plug-ins; system-installed font reference only.",
+  "scope": "Genuine v019 historical text/vector/precision storage. Not legacy string-only font evidence, graph evidence or exact native rendering equivalence.",
+  "files": [
+    {
+      "basename": "historical-2-99-18-text-path-u8",
+      "sourceHeaderVersion": 19,
+      "canvas": [
+        64,
+        32
+      ],
+      "mode": "RGB",
+      "precision": 150,
+      "explicitIccProfile": false,
+      "imagePropertyKinds": [
+        17,
+        19,
+        20,
+        22,
+        21
+      ],
+      "text": {
+        "value": "Historical XCF",
+        "size": 12,
+        "unit": "pixels",
+        "colorRgb": [
+          0,
+          0,
+          0
+        ],
+        "offset": [
+          0,
+          0
+        ],
+        "fontReference": "Sans-serif",
+        "storedFontKind": "GimpFont object",
+        "storedFullName": "Cascadia Code Regular",
+        "storedPostScriptName": "CascadiaCode-Roman",
+        "drawableSize": [
+          98,
+          15
+        ]
+      },
+      "path": {
+        "name": "Original historical Bezier",
+        "closed": true,
+        "pointOrder": "C-A-C C-A-C",
+        "controlCoordinates": [
+          2,
+          4,
+          4,
+          4,
+          8,
+          2,
+          40,
+          24,
+          44,
+          24,
+          48,
+          28
+        ]
+      },
+      "xcf": {
+        "path": "gimp/historical-2-99-18-text-path-u8.xcf",
+        "bytes": 2995,
+        "sha256": "f2f0267e10b0ec69dc57e6d0c5cd8e5d7ad9322c513b74e1f75afc44f8d27f33"
+      },
+      "png": {
+        "path": "gimp/historical-2-99-18-text-path-u8.png",
+        "bytes": 575,
+        "sha256": "38febc05277345ad7d64873d32492bf2411fb5d3ff437e168a11448a96388a33",
+        "dimensions": [
+          64,
+          32
+        ],
+        "bitDepth": 8,
+        "colorType": 6,
+        "chunks": [
+          "IHDR",
+          "IDAT",
+          "IEND"
+        ],
+        "previewPolicy": "Reopened document canvas, clipped to64x32; no path stroke. Ancillary metadata/profile chunks removed; critical pixel chunks unchanged."
+      },
+      "sameVersionReopen": {
+        "gimpVersion": "2.99.18",
+        "precisionVerified": true,
+        "editableTextVerified": true,
+        "fontReferenceVerified": true,
+        "pathCoordinatesVerified": true
+      }
+    },
+    {
+      "basename": "historical-2-99-18-text-path-float",
+      "sourceHeaderVersion": 19,
+      "canvas": [
+        64,
+        32
+      ],
+      "mode": "RGB",
+      "precision": 600,
+      "explicitIccProfile": false,
+      "imagePropertyKinds": [
+        17,
+        19,
+        20,
+        22,
+        21
+      ],
+      "text": {
+        "value": "Historical XCF",
+        "size": 12,
+        "unit": "pixels",
+        "colorRgb": [
+          0,
+          0,
+          0
+        ],
+        "offset": [
+          0,
+          0
+        ],
+        "fontReference": "Sans-serif",
+        "storedFontKind": "GimpFont object",
+        "storedFullName": "Cascadia Code Regular",
+        "storedPostScriptName": "CascadiaCode-Roman",
+        "drawableSize": [
+          98,
+          15
+        ]
+      },
+      "path": {
+        "name": "Original historical Bezier",
+        "closed": true,
+        "pointOrder": "C-A-C C-A-C",
+        "controlCoordinates": [
+          2,
+          4,
+          4,
+          4,
+          8,
+          2,
+          40,
+          24,
+          44,
+          24,
+          48,
+          28
+        ]
+      },
+      "xcf": {
+        "path": "gimp/historical-2-99-18-text-path-float.xcf",
+        "bytes": 4879,
+        "sha256": "60e824df6ca13801ffcf1399a448f7947f157b094039f00ce83e0c06a943a2b4"
+      },
+      "png": {
+        "path": "gimp/historical-2-99-18-text-path-float.png",
+        "bytes": 762,
+        "sha256": "b2ee055e26a9dbb775ca034f98e26f6268ff83113c78654aaaa89e9521fb7185",
+        "dimensions": [
+          64,
+          32
+        ],
+        "bitDepth": 16,
+        "colorType": 6,
+        "chunks": [
+          "IHDR",
+          "IDAT",
+          "IEND"
+        ],
+        "previewPolicy": "Reopened document canvas, clipped to64x32; no path stroke. Ancillary metadata/profile chunks removed; critical pixel chunks unchanged."
+      },
+      "sameVersionReopen": {
+        "gimpVersion": "2.99.18",
+        "precisionVerified": true,
+        "editableTextVerified": true,
+        "fontReferenceVerified": true,
+        "pathCoordinatesVerified": true
+      }
+    }
+  ]
+}
