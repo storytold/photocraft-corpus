@@ -296,7 +296,7 @@ then follow the [pinning workflow](#pinning-workflow).
 each saved next to the author's merged preview as a PNG, plus one original linked-resource PNG
 and three compressed wrappers: **106 files**. The modern Python generator and historical
 ScriptFu generators live in [`tools/gimp-xcf/`](tools/gimp-xcf). Adjacent provenance records
-distinguish ordinary authoring from historical graph bootstrap/rewrite observations.
+identify each producer and its application-authoring and independent reopen procedure.
 PhotoCraft tests check source storage against procedural facts and imported content against
 independently constructed native documents. PNG previews describe GIMP's source appearance;
 they do not require a second GIMP compositor in PhotoCraft.
@@ -325,6 +325,7 @@ they do not require a second GIMP compositor in PhotoCraft.
 | `metadata-channel-view` | Unequal DPI, mm units, nonpersonal comment/Exif/XMP, selected channel, channel overlay and twelve sample points |
 | `effect-*-owner` | Brightness/contrast, levels, exposure and anisotropic Gaussian blur; active effect configuration on one owner and an unaffected sibling, 65% effect opacity and explicit full-white image-global source filter masks |
 | `effect-curves-per-channel-owner` | Original smooth master, red, blue and alpha curve anchors on an offset 19×13 owner, 65% effect opacity, full-white image-global filter mask and an unaffected sibling; public stock GIMP Curve API, with distinct serialized channel groups preserved by stock reopen/resave |
+| `graph-invert-linear`, `graph-original-over-inverted` | Public-API-authored finite graph effects in stock GIMP 3.2.6 XCF22, exact original partial-alpha pixels and GIMP-rendered previews; experimental graph opt-in disclosed |
 | `effect-stack-common-mask`, `effect-stack-distinct-masks-disabled` | Two ordered effect stages, common or distinct selection-derived masks; one disabled stage in the distinct case |
 | `profile-original-{rgb,gray}-{linear,perceptual}` | Original generated ICC matrix/gamma profiles assigned to literal float samples; exact native bytes checked before save and after stock reopen |
 
@@ -380,8 +381,8 @@ personal documents. Its producers are GIMP **3.2.6**, **2.10.32**, **2.99.18**, 
 the unmodified **2.9.5 development commit `0874703e3b7f2d211816feccd745404ed8ec3d71`**.
 The 2.9.x and 2.99.x producers are historical development versions, not stable releases.
 Per-batch generators and adjacent provenance records identify the producer and reproduction
-steps. The two historical graph cases start with our own handcrafted bootstrap seeds, then
-undergo the documented GIMP rewrite/reopen procedure; they are not ordinary GUI-authored graphs.
+steps. The graph cases are created from scratch through stock GIMP 3.2.6 public APIs;
+no handcrafted XCF input or wire writer is used.
 These original assets use this repository's **MIT OR Apache-2.0** license.
 
 The fixtures contain no personal images, personal names, email addresses or private filesystem
@@ -395,7 +396,8 @@ scan alone cannot establish provenance or the absence of all personal data.
 
 Each XCF's same-stem PNG is exported by **GIMP**, using its own visible-layer rendering.
 The modern generator duplicates and merges the authored image before PNG export; the historical
-helpers export the reopened source, including a materialized preview copy for graph cases.
+helpers export the reopened source. The graph generator materializes a duplicate of its
+reopened document for preview export, leaving the saved XCF editable.
 Historical/named-color PNG metadata removal preserves pixel-defining chunks unchanged.
 The extra `link-source.png` is an original generated resource. HDR previews can clip values;
 stored precision must be checked against procedural samples.
@@ -412,7 +414,10 @@ The audit recomputed all **370** committed asset hashes and matched their workin
 against `SHA256SUMS`; all **286** baseline entries are unchanged. All three wrappers decompress
 exactly to their source XCF. All new XCF/PNG dimensions agree, with a maximum dimension of
 **300 px**. The private user/path marker scan found no matches. These figures describe that
-immutable snapshot; later documentation edits do not change the fixture byte total.
+original immutable snapshot; the graph rework replaces four assets as documented below.
+The graph rework still adds **84 fixtures** (40 XCFs, 41 PNGs and three wrappers),
+now totaling **704,490 bytes**. The manifest still has 370 entries; all 286 baseline
+entries retain their original bytes and hashes.
 To independently verify the current assets, run from the repository root:
 
 ```sh
@@ -467,33 +472,40 @@ The exact official installer hash, commands, source facts, PNG dimensions and
 asset hashes are recorded in
 [`historical_2_99_18.provenance.json`](tools/gimp-xcf/historical_2_99_18.provenance.json).
 
-### Historical graph stock-writer cross-validation (disclosed bootstrap)
+### Application-authored graph source fixtures
 
-`historical-2-99-18-graph-invert-linear` and
-`historical-2-99-18-graph-original-over-inverted` contain finite stored
-`gegl:gegl` effects in genuine stock-resaved XCF version 20. The initial inputs
-were **handcrafted documented-wire bootstrap seeds, not GIMP UI-authored files**.
-Stock GIMP 2.99.18 loaded each seed through ordinary `gimp-file-load`, wrote a
-new XCF through `gimp-xcf-save`, deleted the original image, reopened the saved
-bytes and exported a preview after ordinary public `gimp-drawable-merge-filters`.
-No development gate, internal setter or custom graph interpreter was used.
+`graph-invert-linear` and `graph-original-over-inverted` are XCF22 files created from
+scratch through stock **GIMP 3.2.6** public `Image`, `Layer`, `DrawableFilter` and buffer
+APIs. The generator creates the original 8×6 partial-alpha pixels, constructs a
+`gegl:gegl` layer effect, saves the image, deletes it, then reopens the saved file and
+checks every original pixel, graph string and effect setting. GIMP exports the PNG
+from a materialized duplicate of that reopened document. These are finite source
+observations, not a requirement to reproduce GIMP compositing in PhotoCraft.
 
-The stock writer added an empty typed `error` string absent from the seed,
-normalized compositing fields and rewrote the stored coverage-mask records.
-The original 8×6 RGBA owner pixels remain unchanged in the saved XCF; the
-reopened preview changes all 48 pixels. Source alpha is partial: source pixel
-(0,0) is `(17,13,29,64)`, while the graph previews are `(199,199,199,112)` and
-`(176,176,176,148)`. This observes the source graph plus its outer filter
-compositing; it does not prescribe GIMP compositing for native PhotoCraft imports.
+Stock GIMP requires `GIMP_ALLOW_GEGL_GRAPH_LAYER_EFFECT=1` to create this experimental
+layer effect; the opt-in is explicit in the generator and provenance. No source patch,
+internal setter, handmade XCF seed or binary/header rewriting is used. Run in an
+isolated `GIMP3_DIRECTORY`, from the repository root:
 
-The original bootstrap generator is
-[`historical_2_99_18_graph_seed.py`](tools/gimp-xcf/historical_2_99_18_graph_seed.py),
-and the ordinary stock resave/reopen generator is
-[`historical_2_99_18_graph.scm`](tools/gimp-xcf/historical_2_99_18_graph.scm).
-Exact commands, wire facts, full observed pixel arrays and hashes are in
-[`historical_2_99_18_graph.provenance.json`](tools/gimp-xcf/historical_2_99_18_graph.provenance.json).
-These qualify only the two listed finite graph forms, not arbitrary graph
-evaluation, current GIMP 3.2.6 graph acceptance or UI authoring.
+```sh
+GIMP_ALLOW_GEGL_GRAPH_LAYER_EFFECT=1 gimp-console --new-instance --no-interface \
+  --batch-interpreter=python-fu-eval \
+  --batch="exec(open('tools/gimp-xcf/graph_filters.py').read())" --quit
+```
+
+Set `PHOTOCRAFT_GRAPH_OUTPUT` and `PHOTOCRAFT_GRAPH_FACTS` to separate locations for a
+reproduction. Set `PHOTOCRAFT_GRAPH_MODE=verify` to reopen without regenerating files.
+Two fresh-profile runs reproduced all four XCF/PNG files byte-for-byte. Exact samples
+and asset hashes are in [`graph_filters.source-facts.json`](tools/gimp-xcf/graph_filters.source-facts.json);
+producer, API, flag and replacement boundaries are in
+[`graph_filters.provenance.json`](tools/gimp-xcf/graph_filters.provenance.json).
+
+These replace the two `historical-2-99-18-graph-*` bootstrap/rewrite fixtures from
+commit `01382f19a825ac0456d58940ee0bea2cfecc0536`, whose initial inputs did not meet
+this repository's application-authoring requirement. The seed generator and those
+assets are removed from the current corpus; their disclosed Git history is preserved.
+The replacements establish current application-authored graph storage, **not historical
+2.99.18 graph provenance**. The separate historical text/path fixtures are unchanged.
 
 ### GIMP 2.10.32 legacy string-font and PATHS producer witness
 

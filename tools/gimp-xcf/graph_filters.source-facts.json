@@ -1,0 +1,32 @@
+{
+  "producer": "3.2.6",
+  "method": "public API author/save/delete/reopen",
+  "experimentalGraphOptIn": true,
+  "bootstrapUsed": false,
+  "results": [
+    {
+      "name": "graph-invert-linear",
+      "graph": "invert-linear",
+      "canvas": [
+        8,
+        6
+      ],
+      "sourceRgba8Hex": "110d1d40280d28703f0d33a0560d3ed06d0d4940840d54709b0d5fa0b20d6ad01132307028323ba03f3246d0563251406d325c70843267a09b3272d0b2327d40115743a028574ed03f575940565764706d576fa084577ad09b578540b2579070117c56d0287c61403f7c6c70567c77a06d7c82d0847c8d409b7c9870b27ca3a011a1694028a174703fa17fa056a18ad06da1954084a1a0709ba1aba0b2a1b6d011c67c7028c687a03fc692d056c69d406dc6a87084c6b3a09bc6bed0b2c6c940",
+      "previewRgba8Hex": "c7c7c770d1d1d1afdbdddcdce5ece9f6c4c7c670c8d1ceafc8ddd7dcc2ece0f6d1d0d0afdcdcdbdce8eae7f6c5c6c570cbd0cdafcfdcd5dcceeadef6bdc6c270ddd8dadcebe4e6f6c6c5c570cececcafd4d8d4dcd8e4dbf6c0c5c270becec6afecdbe5f6c7c3c470cfc9cbafd8d1d2dcdfdbd9f6c2c3c170c3c9c4afc0d1c5dcc7bfc470d1c2caafdbc6d0dce5cbd6f6c4bfc070c8c2c2afc8c6c2dcc2cbbff6d1b8c9afdcb6cedce8b4d2f6c5babf70cbb8c1afcfb6bfdcceb4baf6bdbab970",
+      "xcfSha256": "bb6e6ec6c6a1fec5a6d4116a1e7f7141da2d25a80f3d283d0ac65f53294f0911",
+      "pngSha256": "5538fdc2b92aa2d10334b4a5983955db27551a3dfe6e103f3d31bc24fbabaffb"
+    },
+    {
+      "name": "graph-original-over-inverted",
+      "graph": "id=original over aux=[ ref=original invert-linear ]",
+      "canvas": [
+        8,
+        6
+      ],
+      "sourceRgba8Hex": "110d1d40280d28703f0d33a0560d3ed06d0d4940840d54709b0d5fa0b20d6ad01132307028323ba03f3246d0563251406d325c70843267a09b3272d0b2327d40115743a028574ed03f575940565764706d576fa084577ad09b578540b2579070117c56d0287c61403f7c6c70567c77a06d7c82d0847c8d409b7c9870b27ca3a011a1694028a174703fa17fa056a18ad06da1954084a1a0709ba1aba0b2a1b6d011c67c7028c687a03fc692d056c69d406dc6a87084c6b3a09bc6bed0b2c6c940",
+      "previewRgba8Hex": "b0b0b094c1c1c1d2d2d4d3f2e2e9e6fdb3b0b194bec1c0d2c5d4cff2c1e9defdc1c1c1d2d3d3d2f2e6e7e5fdb2b1b294bfc1c0d2c9d3cef2cde7dcfdbab1b594d4d0d2f2e8e2e3fdb1b2b294c0c0c0d2cdd0cdf2d6e2d9fdb8b2b594bcc0bed2e9d9e2fdb0b5b394c0bfbfd2d0cbccf2ddd9d7fdb5b5b694bdbfbed2becbc3f2b0b8b394c1bdbfd2d2c3caf2e2cad4fdb3b8b794bebdbdd2c5c3c0f2c1cabffdc1bbbfd2d3b8c9f2e6b4d1fdb2bdb894bfbbbdd2c9b8bef2cdb4bafdbabdbd94",
+      "xcfSha256": "59448e17399874441219607e329dac4c288ac92352e4fadd9a688a730dbfc00b",
+      "pngSha256": "93bbac9749a325c4540b7b04b1b3f5bb807cc66a5f837397e1d2242796f85ca6"
+    }
+  ]
+}
