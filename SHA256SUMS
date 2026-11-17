@@ -20,6 +20,10 @@ d29521ba757b99a9eb267f33539e588c8dbc12b0d5acaa37409c4c79186cda95  gimp/floating-
 ec4dd14158c2195482a65744a23ff68e232d08f392d1fde893c042f759ab989d  gimp/floating-channel-negative-offset.xcf
 7c47a2e0341943537b694646f0e7372b83ebffe5a478fa2359c7d69561b2f58f  gimp/floating-rgb-negative-offset.png
 ee00dc7f314fa47069b918b36a926a65d34de34c8afee3966bca73961b2899c1  gimp/floating-rgb-negative-offset.xcf
+5538fdc2b92aa2d10334b4a5983955db27551a3dfe6e103f3d31bc24fbabaffb  gimp/graph-invert-linear.png
+bb6e6ec6c6a1fec5a6d4116a1e7f7141da2d25a80f3d283d0ac65f53294f0911  gimp/graph-invert-linear.xcf
+93bbac9749a325c4540b7b04b1b3f5bb807cc66a5f837397e1d2242796f85ca6  gimp/graph-original-over-inverted.png
+59448e17399874441219607e329dac4c288ac92352e4fadd9a688a730dbfc00b  gimp/graph-original-over-inverted.xcf
 f2107656985c9c7c7c1c627435d0429844ce55bb00918a893c07fe391a2e6a14  gimp/gray16.png
 9b17c916b3f89ada8bd8bc9602ac4d2064d30c79462518914ffcc2471fc79db7  gimp/gray16.xcf
 97c7cd9fb8f7a64dc23f15a120dfc00707a84189820d51f78c0d46c8774e7582  gimp/groups-perceptual.png
@@ -48,10 +52,6 @@ a1d79b51be37011c73a59f5a4546ccc1dc5649f8d73d8847a3f0253d7eb8b864  gimp/historica
 0aa280b4501b0513fb21b2bf98c54ca23cb55a3dde1240e8807f3640c6a02718  gimp/historical-2-9-6-v011-float-rle.xcf
 5ca0f0123a400a4f0ea38ae2645981ada959f8a12f027d3bb19f0572855ec18f  gimp/historical-2-9-6-v011-u16-asymmetric-rle.png
 9b6e32ec925915ffd77df2084c285e65594f30a3f3392e4b61f2d2302fc4359f  gimp/historical-2-9-6-v011-u16-asymmetric-rle.xcf
-5538fdc2b92aa2d10334b4a5983955db27551a3dfe6e103f3d31bc24fbabaffb  gimp/historical-2-99-18-graph-invert-linear.png
-29fb338694a850aa6e0c41e294d0d35c5253450e4d4357b5280426476a680573  gimp/historical-2-99-18-graph-invert-linear.xcf
-93bbac9749a325c4540b7b04b1b3f5bb807cc66a5f837397e1d2242796f85ca6  gimp/historical-2-99-18-graph-original-over-inverted.png
-32ee3c620d72be70ab3d7473b577df08a05bd4a5b5ba7897ef017895da67939c  gimp/historical-2-99-18-graph-original-over-inverted.xcf
 b2ee055e26a9dbb775ca034f98e26f6268ff83113c78654aaaa89e9521fb7185  gimp/historical-2-99-18-text-path-float.png
 60e824df6ca13801ffcf1399a448f7947f157b094039f00ce83e0c06a943a2b4  gimp/historical-2-99-18-text-path-float.xcf
 38febc05277345ad7d64873d32492bf2411fb5d3ff437e168a11448a96388a33  gimp/historical-2-99-18-text-path-u8.png
