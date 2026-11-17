@@ -119,7 +119,7 @@ There is one top-level folder per source, i.e. per application that authored the
 | Folder | Source | Files |
 |---|---|---:|
 | [`photoshop/`](#photoshop-photoshop-oracle-psds) | Adobe Photoshop 2026 (27.10), driven by [`tools/photoshop-oracles/`](tools/photoshop-oracles) | 258 |
-| [`gimp/`](#gimp-gimp-xcf-oracles) | GIMP 3.2.6 and the documented historical releases, driven by [`tools/gimp-xcf/`](tools/gimp-xcf) | 106 |
+| [`gimp/`](#gimp-gimp-xcf-oracles) | GIMP 3.2.6 and the documented historical releases, driven by [`tools/gimp-xcf/`](tools/gimp-xcf) | 112 |
 
 The repository also contains:
 
@@ -292,9 +292,9 @@ then follow the [pinning workflow](#pinning-workflow).
 
 ## `gimp/`: GIMP XCF oracles
 
-51 small XCF files written by **GIMP 3.2.6** and the documented historical producers,
+54 small XCF files written by **GIMP 3.2.6** and the documented historical producers,
 each saved next to the author's merged preview as a PNG, plus one original linked-resource PNG
-and three compressed wrappers: **106 files**. The modern Python generator and historical
+and three compressed wrappers: **112 files**. The modern Python generator and historical
 ScriptFu generators live in [`tools/gimp-xcf/`](tools/gimp-xcf). Adjacent provenance records
 identify each producer and its application-authoring and independent reopen procedure.
 PhotoCraft tests check source storage against procedural facts and imported content against
@@ -426,8 +426,11 @@ sha256sum -c SHA256SUMS
 
 ### Consumer comparison policies
 
+Exact corpus/consumer revisions, execution counts, reproduction commands and limits for
+the graph rework are recorded in [consumer-validation.md](tools/gimp-xcf/consumer-validation.md).
+
 The following limits describe PhotoCraft commit
-[`a3a2cc57a`](https://github.com/Terra854/photocraft/commit/a3a2cc57ade2f192abbf9b29d8c09173c998e78f).
+[`9bba4e969`](https://github.com/Terra854/photocraft/commit/9bba4e969ab4c1b3948ab96be0e86be409c5795a).
 They are consumer assertions, not a universal tolerance attached to these source files.
 
 | Comparison | Assertion |
@@ -440,10 +443,10 @@ They are consumer assertions, not a universal tolerance attached to these source
 | Existing opaque equivalent legacy-mode cells | RGB difference within `2.5/255`; other mode/alpha outcomes are reported as qualified differences. |
 
 The exact assertions live in
-[`xcf_source_evidence.rs`](https://github.com/Terra854/photocraft/blob/a3a2cc57ade2f192abbf9b29d8c09173c998e78f/crates/io/tests/it/xcf_source_evidence.rs),
-[`xcf_historical_records.rs`](https://github.com/Terra854/photocraft/blob/a3a2cc57ade2f192abbf9b29d8c09173c998e78f/crates/io/tests/it/xcf_historical_records.rs),
-[`xcf_native_import.rs`](https://github.com/Terra854/photocraft/blob/a3a2cc57ade2f192abbf9b29d8c09173c998e78f/crates/io/tests/it/xcf_native_import.rs)
-and [`xcf.rs`](https://github.com/Terra854/photocraft/blob/a3a2cc57ade2f192abbf9b29d8c09173c998e78f/crates/io/tests/it/xcf.rs).
+[`xcf_source_evidence.rs`](https://github.com/Terra854/photocraft/blob/9bba4e969ab4c1b3948ab96be0e86be409c5795a/crates/io/tests/it/xcf_source_evidence.rs),
+[`xcf_historical_records.rs`](https://github.com/Terra854/photocraft/blob/9bba4e969ab4c1b3948ab96be0e86be409c5795a/crates/io/tests/it/xcf_historical_records.rs),
+[`xcf_native_import.rs`](https://github.com/Terra854/photocraft/blob/9bba4e969ab4c1b3948ab96be0e86be409c5795a/crates/io/tests/it/xcf_native_import.rs)
+and [`xcf.rs`](https://github.com/Terra854/photocraft/blob/9bba4e969ab4c1b3948ab96be0e86be409c5795a/crates/io/tests/it/xcf.rs).
 Expanded fixtures use PNGs as source previews and independent native expectations for editing
 and compositing. No blanket GIMP-PNG equivalence is required. Publication and a consumer pin
 update are still required before the expanded source tests run in ordinary upstream corpus CI.
