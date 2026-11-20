@@ -1,0 +1,644 @@
+{
+  "file": "historical-2-9-6-v008-u16-asymmetric-zlib.xcf",
+  "bytes": 1459,
+  "sha256": "9cc3c0733e71e097e04956b462a4d8219891ca122e449a1d10ec9b038e0e5c37",
+  "gimpVersion": "2.9.6",
+  "producerPlatform": "Windows x86_64",
+  "officialInstaller": {
+    "url": "https://download.gimp.org/gimp/v2.9/windows/gimp-2.9.6-x64-setup.exe",
+    "bytes": 111510992,
+    "sha256": "6cc81ef69db63c12debe8d2ee825ab7b85ad6151d13a605419e782f8b7badecd",
+    "officialSha256Match": true,
+    "installerExecuted": false
+  },
+  "version": 8,
+  "pointerBytes": 4,
+  "precision": 250,
+  "compression": 2,
+  "canvas": [
+    8,
+    6
+  ],
+  "layerMode": 0,
+  "ownerDimensions": [
+    8,
+    6
+  ],
+  "ownerOffsets": [
+    0,
+    0
+  ],
+  "ownerName": "Original asymmetric U16 samples",
+  "sampleByteOrder": "little-endian, independently verified for this asymmetric producer witness only; no in-file byte-order discriminator",
+  "pixel0RawHex": "341256349a780040",
+  "pixel0U16": [
+    4660,
+    13398,
+    30874,
+    16384
+  ],
+  "publicPixelBytes": [
+    [
+      52,
+      18,
+      86,
+      52,
+      154,
+      120,
+      0,
+      64
+    ],
+    [
+      55,
+      19,
+      87,
+      53,
+      157,
+      122,
+      0,
+      96
+    ],
+    [
+      58,
+      20,
+      88,
+      54,
+      160,
+      124,
+      0,
+      128
+    ],
+    [
+      61,
+      21,
+      89,
+      55,
+      163,
+      126,
+      0,
+      160
+    ],
+    [
+      64,
+      22,
+      90,
+      56,
+      166,
+      128,
+      0,
+      64
+    ],
+    [
+      67,
+      23,
+      91,
+      57,
+      169,
+      130,
+      0,
+      96
+    ],
+    [
+      70,
+      24,
+      92,
+      58,
+      172,
+      132,
+      0,
+      128
+    ],
+    [
+      73,
+      25,
+      93,
+      59,
+      175,
+      134,
+      0,
+      160
+    ],
+    [
+      57,
+      20,
+      93,
+      55,
+      163,
+      121,
+      0,
+      96
+    ],
+    [
+      60,
+      21,
+      94,
+      56,
+      166,
+      123,
+      0,
+      128
+    ],
+    [
+      63,
+      22,
+      95,
+      57,
+      169,
+      125,
+      0,
+      160
+    ],
+    [
+      66,
+      23,
+      96,
+      58,
+      172,
+      127,
+      0,
+      64
+    ],
+    [
+      69,
+      24,
+      97,
+      59,
+      175,
+      129,
+      0,
+      96
+    ],
+    [
+      72,
+      25,
+      98,
+      60,
+      178,
+      131,
+      0,
+      128
+    ],
+    [
+      75,
+      26,
+      99,
+      61,
+      181,
+      133,
+      0,
+      160
+    ],
+    [
+      78,
+      27,
+      100,
+      62,
+      184,
+      135,
+      0,
+      64
+    ],
+    [
+      62,
+      22,
+      100,
+      58,
+      172,
+      122,
+      0,
+      128
+    ],
+    [
+      65,
+      23,
+      101,
+      59,
+      175,
+      124,
+      0,
+      160
+    ],
+    [
+      68,
+      24,
+      102,
+      60,
+      178,
+      126,
+      0,
+      64
+    ],
+    [
+      71,
+      25,
+      103,
+      61,
+      181,
+      128,
+      0,
+      96
+    ],
+    [
+      74,
+      26,
+      104,
+      62,
+      184,
+      130,
+      0,
+      128
+    ],
+    [
+      77,
+      27,
+      105,
+      63,
+      187,
+      132,
+      0,
+      160
+    ],
+    [
+      80,
+      28,
+      106,
+      64,
+      190,
+      134,
+      0,
+      64
+    ],
+    [
+      83,
+      29,
+      107,
+      65,
+      193,
+      136,
+      0,
+      96
+    ],
+    [
+      67,
+      24,
+      107,
+      61,
+      181,
+      123,
+      0,
+      160
+    ],
+    [
+      70,
+      25,
+      108,
+      62,
+      184,
+      125,
+      0,
+      64
+    ],
+    [
+      73,
+      26,
+      109,
+      63,
+      187,
+      127,
+      0,
+      96
+    ],
+    [
+      76,
+      27,
+      110,
+      64,
+      190,
+      129,
+      0,
+      128
+    ],
+    [
+      79,
+      28,
+      111,
+      65,
+      193,
+      131,
+      0,
+      160
+    ],
+    [
+      82,
+      29,
+      112,
+      66,
+      196,
+      133,
+      0,
+      64
+    ],
+    [
+      85,
+      30,
+      113,
+      67,
+      199,
+      135,
+      0,
+      96
+    ],
+    [
+      88,
+      31,
+      114,
+      68,
+      202,
+      137,
+      0,
+      128
+    ],
+    [
+      72,
+      26,
+      114,
+      64,
+      190,
+      124,
+      0,
+      64
+    ],
+    [
+      75,
+      27,
+      115,
+      65,
+      193,
+      126,
+      0,
+      96
+    ],
+    [
+      78,
+      28,
+      116,
+      66,
+      196,
+      128,
+      0,
+      128
+    ],
+    [
+      81,
+      29,
+      117,
+      67,
+      199,
+      130,
+      0,
+      160
+    ],
+    [
+      84,
+      30,
+      118,
+      68,
+      202,
+      132,
+      0,
+      64
+    ],
+    [
+      87,
+      31,
+      119,
+      69,
+      205,
+      134,
+      0,
+      96
+    ],
+    [
+      90,
+      32,
+      120,
+      70,
+      208,
+      136,
+      0,
+      128
+    ],
+    [
+      93,
+      33,
+      121,
+      71,
+      211,
+      138,
+      0,
+      160
+    ],
+    [
+      77,
+      28,
+      121,
+      67,
+      199,
+      125,
+      0,
+      96
+    ],
+    [
+      80,
+      29,
+      122,
+      68,
+      202,
+      127,
+      0,
+      128
+    ],
+    [
+      83,
+      30,
+      123,
+      69,
+      205,
+      129,
+      0,
+      160
+    ],
+    [
+      86,
+      31,
+      124,
+      70,
+      208,
+      131,
+      0,
+      64
+    ],
+    [
+      89,
+      32,
+      125,
+      71,
+      211,
+      133,
+      0,
+      96
+    ],
+    [
+      92,
+      33,
+      126,
+      72,
+      214,
+      135,
+      0,
+      128
+    ],
+    [
+      95,
+      34,
+      127,
+      73,
+      217,
+      137,
+      0,
+      160
+    ],
+    [
+      98,
+      35,
+      128,
+      74,
+      220,
+      139,
+      0,
+      64
+    ]
+  ],
+  "publicReopenPasses": 2,
+  "all48StoredPixelsEqualEachPublicReopen": true,
+  "all48PixelsEqualQualifiedV7AsymmetricSource": true,
+  "authoringProvenance": {
+    "helper": "historical_2_9_6_v008_u16.scm",
+    "baseHelper": "historical_2_9_6.scm",
+    "sourceFile": "historical-2-9-6-v008-float-zlib.xcf",
+    "sourceSha256": "49617d6bd98ccf7f1ab7699ec60de6a4fb5156c472ac577190eff2d2cf414dfd",
+    "asymmetricSourceFile": "historical-2-9-6-v007-u16-asymmetric-rle.xcf",
+    "asymmetricSourceSha256": "9dfb2514fa0ee05b89ba1054bcc5cdfc719280df7f7027c361d5203f0c6568f3",
+    "sourcesUnchanged": true,
+    "action": "Load the original genuine v8 F32 zlib Save As, convert through public precision API to U16, copy all48 own original asymmetric source pixels through public get/set-pixel, save normally (loaded zlib choice retained), delete and independently reopen twice. No version/header bytes modified.",
+    "reproduction": "Load historical_2_9_6.scm then historical_2_9_6_v008_u16.scm. Call (historical-v8-u16-asymmetric \"<gimp/historical-2-9-6-v008-float-zlib.xcf>\" \"<gimp/historical-2-9-6-v007-u16-asymmetric-rle.xcf>\" \"<output-directory>\"). Sanitize only generated PNG through historical_png_metadata.py sanitize().",
+    "helperSha256": "d6a5507a2c90f36255e4ae909de0a74f3ff881ff813d77645ece438d599062f7",
+    "generatorHashPolicy": {
+      "algorithm": "SHA-256",
+      "canonicalBytes": "UTF-8 source bytes with CRLF normalized to LF; no other content or Unicode normalization. Newly added helpers are physically stored as UTF-8/LF, without BOM.",
+      "gitTransport": "Canonical hashes identify the Git-published LF source, independent of Windows core.autocrlf checkout transport. Original raw execution-byte hashes remain separately identified.",
+      "verification": "The exact canonical new helper bytes were rerun in the same qualified runtime; complete regenerated XCF bytes, sanitized PNG bytes and both48-pixel public readbacks equal the source corpus."
+    },
+    "executionByteHistory": {
+      "originalExecution": {
+        "sha256": "245baf6a06fb5e29f5f95c4b65b02a335097a18a6c4df6a089eaf5cd1d8b2d15",
+        "lineEndings": "CRLF",
+        "meaning": "Raw bytes of the original Windows working helper actually executed before publication normalization; this is not the Git-canonical LF hash."
+      },
+      "canonicalLfReexecution": {
+        "sha256": "d6a5507a2c90f36255e4ae909de0a74f3ff881ff813d77645ece438d599062f7",
+        "lineEndings": "LF",
+        "sameQualifiedRuntime": true,
+        "freshOutputDirectory": true,
+        "fullXcfAndSanitizedPngBytesIdentical": true,
+        "all48PublicReadbackPixelsIdenticalBothPasses": true
+      }
+    },
+    "directHelperTransportAudit": [
+      {
+        "file": "historical_2_9_6.scm",
+        "gitCanonicalLfSha256": "7c6a6f9858f9a585a484b99925b0131ae77fa46c09378e91383b6c844ec1251e",
+        "originalObservedWorkingBytesSha256": "9347bc9dfc05b04bfacf7a0b029e9722c62306363bb8325cf0d865726f9a6935",
+        "originalWorkingLineEndings": "CRLF",
+        "originalWorkingFilesPreserved": true,
+        "canonicalLfVerifiedAgainstExistingGitHead": true,
+        "canonicalLfExecutedInRevalidation": true,
+        "meaning": "Canonical LF and original observed raw-byte identities are distinct; earlier execution bytes were not silently relabeled."
+      },
+      {
+        "file": "historical_2_9_6_v008.scm",
+        "gitCanonicalLfSha256": "90c17602c65996f92a7926cac68875c06213aba65a02f649ae079e2bdf62e315",
+        "originalObservedWorkingBytesSha256": "21904b96b52773e5b1b9c528a8cfa2c78810f505fe4dd19192ae85299d83fa7b",
+        "originalWorkingLineEndings": "CRLF",
+        "originalWorkingFilesPreserved": true,
+        "canonicalLfVerifiedAgainstExistingGitHead": true,
+        "canonicalLfExecutedInRevalidation": true,
+        "meaning": "Canonical LF and original observed raw-byte identities are distinct; earlier execution bytes were not silently relabeled."
+      },
+      {
+        "file": "historical_png_metadata.py",
+        "gitCanonicalLfSha256": "f15bc1b8c2cc442ed85ba3ce2a31a78ad5d28a1e21a9e991e9eabadfe13b80aa",
+        "originalObservedWorkingBytesSha256": "f15bc1b8c2cc442ed85ba3ce2a31a78ad5d28a1e21a9e991e9eabadfe13b80aa",
+        "originalWorkingLineEndings": "LF",
+        "originalWorkingFilesPreserved": true,
+        "canonicalLfVerifiedAgainstExistingGitHead": true,
+        "canonicalLfExecutedInRevalidation": true,
+        "meaning": "Canonical LF and original observed raw-byte identities are distinct; earlier execution bytes were not silently relabeled."
+      }
+    ],
+    "baseHelperSha256": "7c6a6f9858f9a585a484b99925b0131ae77fa46c09378e91383b6c844ec1251e"
+  },
+  "sourcePreview": {
+    "file": "historical-2-9-6-v008-u16-asymmetric-zlib.png",
+    "bytes": 124,
+    "sha256": "5ca0f0123a400a4f0ea38ae2645981ada959f8a12f027d3bb19f0572855ec18f",
+    "criticalChunksByteIdentical": true,
+    "ancillaryMetadataAndProfilesRemoved": true,
+    "purpose": "Stock source storage witness; not a PhotoCraft native compositing oracle"
+  },
+  "privacyAudit": {
+    "privatePathMarkersAbsent": true,
+    "parasites": [
+      {
+        "name": "gimp-image-metadata",
+        "flags": 1,
+        "bytes": 352,
+        "tagNames": [
+          "Exif.Image.BitsPerSample",
+          "Exif.Image.ImageLength",
+          "Exif.Image.ImageWidth",
+          "Exif.Image.ResolutionUnit",
+          "Exif.Image.XResolution",
+          "Exif.Image.YResolution"
+        ]
+      },
+      {
+        "name": "gimp-image-grid",
+        "flags": 1,
+        "bytes": 256
+      }
+    ],
+    "layerPropertyKinds": [
+      2,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      15,
+      20,
+      28,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37
+    ],
+    "singleRasterLayerNoChannels": true,
+    "externalResourcesBundled": false
+  }
+}
