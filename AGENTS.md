@@ -75,7 +75,7 @@ Layout:
 Paths and conventions:
 
 - Authoring clone: `photocraft-corpus/` next to `photocraft/`. PhotoCraft's `corpus/photoshop/` and `corpus/gimp/` are gitignored copies filled by `cargo xtask corpus --photoshop` and `--gimp`; `cargo xtask test-corpus --local` copies from the authoring clone (or `PHOTOCRAFT_CORPUS_REPO=<path>`).
-- The generators drive Photoshop (macOS Automation permission) and GIMP 3.2. They are run by the operator on their own machine; an agent does not run them.
+- The generators drive Photoshop (macOS Automation permission) and GIMP 3.2.
 - Regenerate the manifest in the same commit as any file change:
   `find photoshop gimp -type f \( -name '*.psd' -o -name '*.xcf' -o -name '*.png' \) | LC_ALL=C sort | xargs shasum -a 256 > SHA256SUMS`
 - Canvases are at most 320 px with a few layers each; a set stays under about 50 MB raw and 10 MB packed.

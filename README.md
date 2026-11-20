@@ -186,8 +186,7 @@ change behind a pin.
 3. In the same PR, run `cargo xtask test-corpus` and raise the floors where results improved.
    Never lower a floor silently.
 
-Commits are immutable and old pins must stay fetchable, so **never rewrite this repository's
-history** (no force-push, no history rewrite).
+Commits are immutable and old pins stay fetchable.
 
 ## Size guidance
 
