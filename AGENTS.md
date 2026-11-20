@@ -79,4 +79,4 @@ Paths and conventions:
 - Regenerate the manifest in the same commit as any file change:
   `find photoshop gimp -type f \( -name '*.psd' -o -name '*.xcf' -o -name '*.png' \) | LC_ALL=C sort | xargs shasum -a 256 > SHA256SUMS`
 - Canvases are at most 320 px with a few layers each; a set stays under about 50 MB raw and 10 MB packed.
-- PhotoCraft pins this repository's commits from `main`, so every old pin must stay fetchable. A pin moves in a PhotoCraft PR: set `PHOTOCRAFT_CORPUS_COMMIT` in `xtask/src/corpus_pins.rs`, run `cargo xtask corpus --photoshop --update-manifest`, then `cargo xtask test-corpus`.
+- PhotoCraft pins this repository's commits from `main`, so every old pin must stay fetchable. Each folder has its own pin in `xtask/src/corpus_pins.rs`: `PHOTOCRAFT_CORPUS_COMMIT` for `photoshop/` and `PHOTOCRAFT_CORPUS_GIMP_COMMIT` for `gimp/`. A pin moves in a PhotoCraft PR: set the constant, run `cargo xtask corpus --photoshop --update-manifest` or `cargo xtask corpus --gimp --update-manifest`, then `cargo xtask test-corpus`.
