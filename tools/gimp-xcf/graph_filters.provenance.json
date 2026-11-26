@@ -1,0 +1,24 @@
+{
+  "producer": "GIMP 3.2.6, stock Windows x86_64",
+  "officialInstallerUrl": "https://download.gimp.org/gimp/v3.2/windows/gimp-3.2.6-setup.exe",
+  "officialInstallerSha256": "9337cccbc01d4098ee7a3dab215b3afbe6ece99c5287c92441d6f12cf541ebca",
+  "generator": "graph_filters.py",
+  "generatorSha256": "95a1cb1a586466980dd471798ba1d7d00bf332e8cd3063e7c9e0dde0274fb894",
+  "sourceFacts": "graph_filters.source-facts.json",
+  "bootstrapUsed": false,
+  "authoring": "New image and original RGBA samples created through public GIMP/Gegl APIs; public DrawableFilter.new configures gegl:gegl, followed by save/delete/reopen and GIMP-only preview export. No XCF bytes are assembled or patched.",
+  "featureFlag": {
+    "GIMP_ALLOW_GEGL_GRAPH_LAYER_EFFECT": "1",
+    "reason": "Experimental layer-effect opt-in requested by stock GIMP when creating this operation; explicitly enabled for this batch."
+  },
+  "scope": "Two finite graph forms in XCF22 from GIMP 3.2.6; not historical GIMP 2.99.18 producer qualification, unrestricted graphs or PhotoCraft/GIMP compositor equivalence.",
+  "replacement": "Replaces the two historical-2-99-18-graph-* bootstrap/rewrite cases from 01382f19a825ac0456d58940ee0bea2cfecc0536. The seeds, wire writer and their provenance are removed from the current corpus; their disclosed history remains immutable.",
+  "publicReferences": [
+    "https://developer.gimp.org/api/3.0/libgimp/ctor.DrawableFilter.new.html",
+    "https://developer.gimp.org/api/3.0/libgimp/method.DrawableFilter.get_config.html",
+    "https://developer.gimp.org/resource/writing-a-filter/helper-tools/"
+  ],
+  "reproduction": "From the repository root, use an isolated GIMP3_DIRECTORY, set GIMP_ALLOW_GEGL_GRAPH_LAYER_EFFECT=1, and run graph_filters.py with the stock Python-Fu batch interpreter as documented in its header. PHOTOCRAFT_GRAPH_OUTPUT and PHOTOCRAFT_GRAPH_FACTS optionally redirect reproduction output. PHOTOCRAFT_GRAPH_MODE=verify performs a separate reopen without modifying the fixtures.",
+  "verification": "Two separate fresh-profile generator runs produced all four XCF/PNG files byte-for-byte identically. Each run deletes the authored image and checks all 48 reopened original RGBA pixels, operation, graph string, opacity, visibility and GIMP-exported preview pixels.",
+  "pngMetadata": "The shared historical_png_metadata helper removes ancillary metadata only, preserving PNG pixel-defining chunks and CRCs."
+}

@@ -10,9 +10,9 @@ docs/brand/LICENSE-brand.txt.
 Third-party material
 
 None. Every test file here was generated from scratch by the PhotoCraft contributors with the
-scripts in tools/ (Adobe Photoshop used as the authoring tool; none of its code, presets, patterns,
-contours, profiles or other assets are included). Fonts are referenced by name only and are not
-included.
+scripts in tools/ (Adobe Photoshop and GIMP used as the authoring tools; none of their code,
+presets, patterns, contours, profiles or other assets are included). Fonts are referenced by name
+only and are not included.
 
 Adobe and Photoshop are trademarks or registered trademarks of Adobe Inc. in the United States
 and/or other countries. This project is not affiliated with, sponsored by or endorsed by Adobe Inc.
